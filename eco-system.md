@@ -1,7 +1,7 @@
 # Basics
 
 1. MongoDB database
-   - self-managed & enterprise solution
+   - self-managed & enterprise solution: community server (free), enterprise server (for security & config)
    - cloud manager (ops)
    - atlas (cloud)
    - compass: graphical UI which allow to connect to database an look into data more conveniently
