@@ -5,6 +5,8 @@ MongoDB environment allows to
 - create and start a MongoDB database server
 - which allows to run
 - multiple databases on it
+- for creating, reding, updating, and deleting data
+- using CRUD-operations
 
 # Difference b/w MongoDB and other databases
 
