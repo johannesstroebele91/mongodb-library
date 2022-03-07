@@ -2,6 +2,9 @@
 
 1. MongoDB database
    - self-managed & enterprise solution: community server (free), enterprise server (for security & config)
+   - MongoD: is a service that
+     - can automatically spin up the database server when the system is starting
+     - without it, the database server needs to be started manually
    - cloud manager (ops)
    - atlas (cloud)
    - compass: graphical UI which allow to connect to database an look into data more conveniently
