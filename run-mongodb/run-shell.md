@@ -18,6 +18,7 @@ Several methods exist to start the new shell
 1. Search for mongosh in the windows apps and start it
 2. Open terminal > `mongosh`
 3. Open terminal > `...\mongosh\mongosh.exe` (installation folder)
+4. Open terminal > `mongosh mongodb://127.0.0.1:27017/` (installation folder)
 
 ## 2.2. Start old shell `mongo.exe` (default)
 
