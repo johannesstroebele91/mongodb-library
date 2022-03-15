@@ -18,6 +18,11 @@ In the drivers
 - the same commands are used as in the shell,
 - BUT adapted to the syntax of the respective programming language
 
+Drives enable to
+
+- interact with the MongoDB server
+- via queries
+
 # Example
 
 The syntax of the MongoDB commands
