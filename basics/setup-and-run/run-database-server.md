@@ -3,7 +3,7 @@
 Multiple methods exist to start the MongoDB database server via the service:
 
 1. Automatic start via MongoD (Windows only)
-   - MongoD is a service that
+   - MongoDB is a service that
    - can automatically spin up the database server
    - when the system is starting
    - Installation: via setup wizard by checking "Install MongoD as a Service"
@@ -23,3 +23,8 @@ Multiple methods exist to start the MongoDB database server via the service:
    - Search for MongoDB server
    - Click on `start`
    - Installation: via setup wizard by un-checking "Install MongoD as a Service"
+
+# Port
+
+- Start MongoDB server using a non-default port: it can be specified using e.g. `mongod --port 27018`
+- Start MongoDB shell for the non-default port: `mongo --port 27018`
