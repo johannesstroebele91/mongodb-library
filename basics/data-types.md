@@ -15,7 +15,7 @@ JSON (BSON) supports many data types such as:
 
 ```JSON
 {"someNestedObject": {
-  "id": "1239sdfhjkaxca",
+  "_id": ObjectId("62334d4722f77f96878bcb86"),
   "someString": "file",
   "someNumber": 21312,
   "someBoolean": true,
