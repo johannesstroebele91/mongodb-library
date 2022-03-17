@@ -1,12 +1,9 @@
 **Table of Contents**
 
 - [Basic](#basic)
+- [Nested documents](#nested-documents)
 - [find()](#find)
 - [findOne()](#findone)
-- [Projection (return certain fields)](#projection-return-certain-fields)
-  - [Relevance](#relevance)
-  - [Explanation](#explanation)
-  - [Example](#example)
 
 # Basic
 
@@ -17,6 +14,19 @@ Get one or multiple documents
 - by passing the parameters:
   - Filter: narrow down which documents to change
   - Options: configuration
+
+# Nested documents
+
+Nested documents can be accessed by
+
+- find one document and returning a certain field `db.passengers.findOne({name: "Albert Twostone"}).hobbies`
+- find all documents that have a certain field `db.passengers.find({hobbies: "sports"})`
+  - MongoDB is smart enough to know
+  - which data type is specified
+  - e.g. `hobbies` is an array that can have `sports`
+- find all documents hat have a nested field `db.flightData.find({"status.description": "on-time"})`
+  - the nested field needs to be
+  - wrapped in "" like `"status.description"`
 
 # find()
 
@@ -52,63 +62,3 @@ Get the first matching document it finds
 
 - syntax `db.products.findOne(filter, options)`
 - e.g. `db.bios.findOne({ name: 1, contribs: 1 } )`
-
-# Projection (return certain fields)
-
-## Relevance
-
-Often, applications only need
-
-- a fraction of the data
-- from a database
-
-Data in a database
-
-```JSON
-{
-    "_id": "7148wxhcj",
-    "name": "Max",
-    "age": 29,
-    "job": "instructor",
-}
-```
-
-Needed data in application
-
-```JSON
-{
-    "name": "Max",
-    "age": 29,
-}
-```
-
-## Explanation
-
-Projection enables to
-
-- filters out data
-- additionally to the filter parameter
-
-Projection enables is
-
-- very good for performance
-- because the data transformation
-- happens in the server
-- and not in the client
-
-## Example
-
-Specify which key-value pairs are included
-
-- the id is by default included (can be omitted using `_id: 0`)
-- and all other key-value pairs are omitted by default
-- `db.passengers.find({}, {name: 1, _id: 0})`
-
-Returned data:
-
-```BSON
-{ _id: ObjectId("623356a022f77f96878bcb99"),
-  name: 'Klaus Arber' },
-{ _id: ObjectId("623356a022f77f96878bcb9a"),
-  name: 'Albert Twostone' `}
-```

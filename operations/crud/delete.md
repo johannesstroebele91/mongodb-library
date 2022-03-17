@@ -1,3 +1,9 @@
+**Table of Contents**
+
+- [Basics](#basics)
+- [deleteOne()](#deleteone)
+- [deleteMany()](#deletemany)
+
 # Basics
 
 Delete one or multiple documents

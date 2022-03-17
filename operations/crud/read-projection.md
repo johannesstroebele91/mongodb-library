@@ -5,8 +5,6 @@ Often, applications only need
 - a fraction of the data
 - from a database
 
-- e.g.
-
 Projection enables to
 
 - return only a certain field or fields

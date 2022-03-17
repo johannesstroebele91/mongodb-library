@@ -1,3 +1,10 @@
+**Table of Contents**
+
+- [Basic](#basic)
+- [Important](#important)
+- [insertOne()](#insertone)
+- [insertMany()](#insertmany)
+
 # Basic
 
 Create inserts

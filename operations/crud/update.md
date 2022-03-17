@@ -1,3 +1,11 @@
+**Table of Contents**
+
+- [Basic](#basic)
+- [updateOne()](#updateone)
+- [updateMany()](#updatemany)
+- [replaceOne()](#replaceone)
+- [update](#update)
+
 # Basic
 
 Changing one or multiple documents
