@@ -1,46 +1,25 @@
 # Basics
 
-CRUD are typical operations executed against a database, which consist of:
+CRUD are typical operations executed against a database:
 
 - Create
 - Read
 - Update
 - Delete
 
-The most important CRUD operations are:
+# Explanation
 
-# CREATE
+Most of the commands e.g. `db.products.insertOne()` include
 
-Create a new document in a collection
-
-- e.g. `db.products.insertOne({"name": "Max"})`
 - `db` for referencing the current database
 - `products` creates a collection on the fly or uses an existing one
-- various functions for collections exists such as:
+- e.g. `insertOne()` query command
 
-## insertOne
+# Example
 
-`db.products.insertOne({"name": "Max"})`
+For a flight
 
-- insertOne is a query command
-- which inserts one JSON object
-- by enabling to pass the object
-- as a key-value pair
-  - "" can be omitted for the key but it will be stored in the db as "someKey"
-  - and id is automatically generated, but can be added manually like this `{ _id: "someIdz3482as"}`
-    - PS an id key need to be always named like this `_id`
-    - PS prevents multiple objects with the same id
-
-After the operation is complete,
-
-- a message will appear if the command was executed successfully
-- `{ acknowledged: true, insertedId: ObjectId("6232f415509d5adfc7a77a0a") }`
-- and an id was automatically generated
-
-# READ
-
-Show all documents in a collection: `db.products.find()`
-
-`db.products.find()`: Outputs the data
-
-`db.products.find().pretty()`: Outputs the data in a nicer format
+- a new flight can be scheduled (create)
+- a flight information updated (update)
+- a flight cancled (delete)
+- flight information displayed (read)
