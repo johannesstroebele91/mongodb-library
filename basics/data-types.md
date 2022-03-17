@@ -5,7 +5,8 @@ JSON (BSON) supports many data types such as:
 - String: `{"someString": "file"}`
 - Number: `{"someNumber": 21312}`
 - Boolean: `{"someBoolean": true}`
-- Array: `"someArray": [ {"value": "New"}, {"value": "Open"}, ]`
+- Array with primitive data: `"someArray": [ "sports", "cooking" ]`
+- Array with objects: `"someArray": [ {"value": "New"}, {"value": "Open"}, ]`
 - MongoDB ObjectId (BSON): `{"insertedIsd": ObjectId("1239sdfhjkaxca")}`
   - is created automatically when a new document is inserted
   - the type is specified via `ObjectId()`

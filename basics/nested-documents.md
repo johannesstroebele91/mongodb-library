@@ -1,9 +1,9 @@
 # Basics
 
-Documents can be nested
+Documents can be embedded (aka nested)
 
 - the nesting limit is 100 AND
-- the overall document size below 16 MB
+- the overall document size needs to be below 16 MB
 
 # Example
 
