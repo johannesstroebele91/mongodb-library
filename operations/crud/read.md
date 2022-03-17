@@ -13,7 +13,9 @@ Get one or multiple documents
 Get one or multiple documents
 
 - syntax `db.products.find(filter, options)`
-- find all documents in a collection e.g. `db.products.find()`
+- find all documents in a collection limited e.g. `db.products.find()`
+- find all documents in a collection without limits e.g. `db.products.find().toArray()`
+- find all documents and modify / print them `db.passengers.find().forEach((passengerData) => {printjson(passengerData)})`
 - find one or multiple documents in a collection
   - that match the filter criteria
   - e.g. `flightData.find({intercontinental: true})`
@@ -25,6 +27,14 @@ Important:
 
 - all documents are returned by passing no parameter
 - a nicer format for an output can be archived via `db.products.find().pretty()`
+- not all documents are return
+  - MongoDB aborts after a certian amount of objects
+  - because MongoDB does not encourage to return like 20 million objects
+  - but the command `it` can be used to show more
+  - this is because MongoDB does not return
+    - an array of objects
+    - but a cursor object that enables to cycle through the results
+    - the function `.toArray()` will exhaust the cursor object and show everything
 
 # findOne()
 
