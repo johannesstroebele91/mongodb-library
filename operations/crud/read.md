@@ -13,7 +13,13 @@ Get one or multiple documents
 Get one or multiple documents
 
 - syntax `db.products.find(filter, options)`
-- e.g. `db.products.find()`
+- find all documents in a collection e.g. `db.products.find()`
+- find one or multiple documents in a collection
+  - that match the filter criteria
+  - e.g. `flightData.find({intercontinental: true})`
+- find alle documents where the filter criteria
+  - is e.g. greater than something `distance: {$gt: 10000}`
+  - e.g. `db.flightData.find({distance: {$gt: 10000}})`
 
 Important:
 
