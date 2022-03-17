@@ -26,8 +26,10 @@ Create a new document in a collection
 - which inserts one JSON object
 - by enabling to pass the object
 - as a key-value pair
-  - "" can be omitted for the key
-  - but it will be stored in the db as "someKey"
+  - "" can be omitted for the key but it will be stored in the db as "someKey"
+  - and id is automatically generated, but can be added manually like this `{ _id: "someIdz3482as"}`
+    - PS an id key need to be always named like this `_id`
+    - PS prevents multiple objects with the same id
 
 After the operation is complete,
 
