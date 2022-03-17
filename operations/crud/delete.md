@@ -21,5 +21,6 @@ Delete one or multiple documents
 
 - syntax `db.products.deleteMany(filter, options)`
 - e.g. `db.products.deleteMany({ price: 19 })`
-  - Deletes ALL documents
-  - that have the price 19€
+  - deletes ALL documents that have the price 19€
+- e.g. `db.products.updateOne(filter, data, options)`
+  - deletes all documents due to empty filter `{}`

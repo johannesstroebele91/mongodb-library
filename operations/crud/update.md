@@ -15,6 +15,8 @@ Update one document
 
 - syntax `db.products.updateOne(filter, data, options)`
 - Example: `db.products.updateOne({ _id: 1 }, { $set: { price: 899 } })`
+  - `{$set: {price: 899}}` set$ sets the value of an object
+  - if it exists or if it does not exist
 
 # updateMany()
 
@@ -25,7 +27,7 @@ Update one or multiple documents
 
 # replaceOne()
 
-Return one or multiple documents
+Replace one document
 
 - syntax `db.products.replaceOne(filter, data, options)`
 - e.g. `db.restaurant.replaceOne( { "name" : "Pizza Peter" }, { "_id": 4, "name" : "Pizza Peter", "Borough" : "Manhattan"}, { upsert: true } );`
