@@ -3,6 +3,7 @@
 The most important basic commands are:
 
 - SHOW all databases: `show dbs`
+- Show stats of the database: `db.stats()` like collections, average object size
 - CREATE a new database or SWITCH to it: `use <someName>`
   - the datbase does not get created
   - before data is stored into it
