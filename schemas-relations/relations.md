@@ -89,3 +89,4 @@ Output:
 # Relation types
 
 - 1:1 relation: embedded objects mostly the best solution (e.g. each student has one student id)
+- 1:n (1: many) relation: embedded objects mostly the best solution (e.g. one student can attend multiple courses)
