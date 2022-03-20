@@ -8,12 +8,20 @@
 
 # Basics
 
-1. Data is passed via e.g. insertOne(), updateOne() to change a collection
-2. MongoDB will validate (accepts or rejects)
+Schema validation enables to
+
+- define rules to validate
+- insert and update operations
+- before changes they change the database
+
+Mostly validation works by
+
+1. Data being passed via e.g. insertOne(), updateOne() to change a collection
+2. and MongoDB validate
    - the passed data
    - based on the validation schema
 
-MongoDB enables to define
+This is done by defining
 
 - schema validation
 - validation level

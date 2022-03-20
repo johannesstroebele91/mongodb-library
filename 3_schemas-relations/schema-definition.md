@@ -20,6 +20,8 @@
 6. Are data and storage limit hit?
    - not likely
    - but should be kept in mind
+7. The concrete steps can be seen
+   - in the `schema-validation.md`
 
 # How to derive the data structure
 
