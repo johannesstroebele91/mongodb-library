@@ -1,13 +1,12 @@
 **Table of Contents**
 
 - [Basics](#basics)
-- [Nested / embedded documents](#nested--embedded-documents)
-  - [1. Add document to the patients collection with the diseaseSummary data](#1-add-document-to-the-patients-collection-with-the-diseasesummary-data)
-- [References (like SQL)](#references-like-sql)
-  - [1. Add document to patients collection](#1-add-document-to-patients-collection)
-  - [2. Add document to diseaseSummaries collection](#2-add-document-to-diseasesummaries-collection)
-  - [3. Return the id of the diseaseSummary of the patient](#3-return-the-id-of-the-diseasesummary-of-the-patient)
-- [Relation types](#relation-types)
+- [Types](#types)
+- [1. Nested documents](#1-nested-documents)
+- [2. References (like SQL)](#2-references-like-sql)
+  - [2.2 Add document to patients collection](#22-add-document-to-patients-collection)
+  - [2.2. Add document to diseaseSummaries collection](#22-add-document-to-diseasesummaries-collection)
+  - [2.3. Return the id of the diseaseSummary of the patient](#23-return-the-id-of-the-diseasesummary-of-the-patient)
 
 # Basics
 
@@ -15,21 +14,41 @@ Multiple collections
 
 - can be related
 - which can be done using:
+  - nested documents
+  - referencing documents
 
-# Nested / embedded documents
+# Types
+
+- 1:1 relation: embedded objects mostly the best solution (e.g. each student has one student id)
+- 1:n (1: many) relation:
+  - embedded objects mostly the best solution (e.g. one student can attend multiple courses)
+  - sometimes also reference (e.g. citizens and cities, because many citizens might live in one city)
+- n:m relation:
+  - mostly with references by either using
+    1. by embedding the id of the e.g. product in the customer OR
+    2. make a join table that has both ids (e.g. customers and products) (SQL approach)
+    3. by embedding the whole e.g. product in the customer (might lead to duplication and difficult updates)
+
+# 1. Nested documents
+
+Nested documents
+
+- group data together logically
+- great for data that
+  - belongs together and
+  - is not really overlapping with other data
+- BUT you should avoid super deep nested data or large arrays
 
 - Pro: only one query needed to fetch all the user data
 - Contra: might lead to lots of duplicated code, which is harder to handle if it changes
 
-## 1. Add document to the patients collection with the diseaseSummary data
+Add document to the patients collection with the diseaseSummary data
 
 `db.patients.insertOne({name: "Max", age: 29, diseaseSummary: {diseases: ["cold", "broken leg"]}})`
 
-Output:
-
 ``
 
-# References (like SQL)
+# 2. References (like SQL)
 
 Links like the ObjectId
 
@@ -37,10 +56,16 @@ Links like the ObjectId
 - to reference the document in one collection
 - to a document in another one
 
+Reference approach is about splitting data across collections, which is
+
+- great for related but shared data as well as
+- for data which is used in relations and standalone
+- allows you to overcome nesting and size limits (by creating new documents)
+
 - Pro: easier to handle if the data in one of the collection changes
 - Contra: multiple queries needed to fetch all user data
 
-## 1. Add document to patients collection
+## 2.2 Add document to patients collection
 
 `db.patients.insertOne({name: "Max", age: 29, diseaseSummary: "summary-max-1"})`
 
@@ -53,7 +78,7 @@ Output:
   diseaseSummary: { diseases: [ 'cold', 'broken leg' ] } }
 ```
 
-## 2. Add document to diseaseSummaries collection
+## 2.2. Add document to diseaseSummaries collection
 
 `db.diseaseSummaries.insertOne({_id: "summary-max-1", diseases: ["cold", "broken leg"]})`
 
@@ -63,7 +88,7 @@ Output:
 { "_id": "summary-max-1", "diseases": ["cold", "broken leg"] }
 ```
 
-## 3. Return the id of the diseaseSummary of the patient
+## 2.3. Return the id of the diseaseSummary of the patient
 
 `db.diseaseSummaries.findOne({_id: db.patients.findOne().diseaseSummary})`
 
@@ -85,15 +110,3 @@ Output:
   age: 29,
   diseaseSummary: { diseases: [ 'cold', 'broken leg' ] } }
 ```
-
-# Relation types
-
-- 1:1 relation: embedded objects mostly the best solution (e.g. each student has one student id)
-- 1:n (1: many) relation:
-  - embedded objects mostly the best solution (e.g. one student can attend multiple courses)
-  - sometimes also reference (e.g. citizens and cities, because many citizens might live in one city)
-- n:m relation:
-  - mostly with references by either using
-    1. by embedding the id of the e.g. product in the customer OR
-    2. make a join table that has both ids (e.g. customers and products) (SQL approach)
-    3. by embedding the whole e.g. product in the customer (might lead to duplication and difficult updates)
