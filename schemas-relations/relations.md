@@ -7,6 +7,7 @@
   - [2.2 Add document to patients collection](#22-add-document-to-patients-collection)
   - [2.2. Add document to diseaseSummaries collection](#22-add-document-to-diseasesummaries-collection)
   - [2.3. Return the id of the diseaseSummary of the patient](#23-return-the-id-of-the-diseasesummary-of-the-patient)
+- [Relation types](#relation-types)
 
 # Basics
 
@@ -62,6 +63,12 @@ Reference approach is about splitting data across collections, which is
 - for data which is used in relations and standalone
 - allows you to overcome nesting and size limits (by creating new documents)
 
+Links like the ObjectId
+
+- can be used in collections
+- to reference the document in one collection
+- to a document in another one
+
 - Pro: easier to handle if the data in one of the collection changes
 - Contra: multiple queries needed to fetch all user data
 
@@ -110,3 +117,8 @@ Output:
   age: 29,
   diseaseSummary: { diseases: [ 'cold', 'broken leg' ] } }
 ```
+
+# Relation types
+
+- 1:1 relation: embedded objects mostly the best solution (e.g. each student has one student id)
+- 1:n (1: many) relation: embedded objects mostly the best solution (e.g. one student can attend multiple courses)
