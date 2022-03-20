@@ -46,7 +46,19 @@ However, to set configuration options
 
 Example:
 
-1. Create collection like in the example in the file `validation.js`
+1. Create collection like in the example in the file `validation-createCol.js`
 2. Add a document based on the schema `db.posts.insertOne({title: "Post", text: "desc", tags: ["new", "tech"], creator: ObjectId("6237395059b36fb055c61e13"), comments: [{text: "Post", author: ObjectId("6237395059b36fb055c61e13")}]})`
    - if a document is added that does not match the schema
    - an error with the errormsg: "document failed validation" appears
+
+# HowToChange validation
+
+The validation can be changed
+
+- using `db.runCommand()` like in the `validation-runCommand.js` file
+- which has the arguments:
+  - 1. argument: `collMod` which is the collection that should be modified
+  - 2. argument: validator can edited here
+  - 3. argument: validationLevel can be either "error" or "warn"
+    - the log for the warn option is stored
+    - in the log files
