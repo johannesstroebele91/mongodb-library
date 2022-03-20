@@ -1,11 +1,28 @@
 # Basics
 
+Schemas define
+
+- how the documents looks
+- in a collection
+
 MongoDB does NOT enforce Schemas
 
 - so documents don"t have to use
 - the same schema inside of one collection
 
-BUT it enables to use a schema
+Schemas should be modelled based on
+
+- the application needs
+- whereby it is important to consider
+  - read and write frequency
+  - relations
+  - amount (and size) of data
+  - PS more info in the
+
+Schemas define
+
+- the relation
+- between documents in collections
 
 # Types
 

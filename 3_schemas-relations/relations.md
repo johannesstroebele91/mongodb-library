@@ -18,6 +18,11 @@ Multiple collections
   - nested documents
   - referencing documents
 
+Schemas define
+
+- the relation
+- between documents in collections
+
 # Types
 
 - 1:1 relation: embedded objects mostly the best solution (e.g. each student has one student id)
