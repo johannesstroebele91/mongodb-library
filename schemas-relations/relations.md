@@ -89,4 +89,11 @@ Output:
 # Relation types
 
 - 1:1 relation: embedded objects mostly the best solution (e.g. each student has one student id)
-- 1:n (1: many) relation: embedded objects mostly the best solution (e.g. one student can attend multiple courses)
+- 1:n (1: many) relation:
+  - embedded objects mostly the best solution (e.g. one student can attend multiple courses)
+  - sometimes also reference (e.g. citizens and cities, because many citizens might live in one city)
+- n:m relation:
+  - mostly with references by either using
+    1. by embedding the id of the e.g. product in the customer OR
+    2. make a join table that has both ids (e.g. customers and products) (SQL approach)
+    3. by embedding the whole e.g. product in the customer (might lead to duplication and difficult updates)
