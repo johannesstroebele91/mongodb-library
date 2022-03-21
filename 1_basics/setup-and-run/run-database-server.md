@@ -1,5 +1,10 @@
 # Basics
 
+The MongoDB server can be started
+
+- as a service and
+- as a process
+
 Multiple methods exist to start the MongoDB database server via the service:
 
 1. Automatic start via MongoD (Windows only)
@@ -24,7 +29,13 @@ Multiple methods exist to start the MongoDB database server via the service:
    - Click on `start`
    - Installation: via setup wizard by un-checking "Install MongoD as a Service"
 
-# Port
+# Configuration via mongod
 
-- Start MongoDB server using a non-default port: it can be specified using e.g. `mongod --port 27018`
-- Start MongoDB shell for the non-default port: `mongo --port 27018`
+The `mongod` commandy can be configured by adding options:
+
+- specify where the data for the databases is `mongod --dbpath C:\...\data`:
+  - the folder needs to be created in advance
+  - for it to work
+- specify where the log data is `mongod --logpath C:\...\logs\mongod.log`
+  - besides needing to create the folder,
+  - a `mongod.log` file needs to be created
