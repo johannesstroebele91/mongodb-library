@@ -5,7 +5,6 @@
 - [insertOne()](#insertone)
 - [insertMany()](#insertmany)
 - [insert()](#insert)
-- [mongoimport](#mongoimport)
 - [Configuration](#configuration)
 - [Atomicity of write operations](#atomicity-of-write-operations)
 
@@ -67,13 +66,6 @@ Create one or multiple documents in a collection
 - Examples are similar to insertOne() and insertMany()
   - e.g. `db.products.insert({"name": "Max"})`
   - e.g. `db.products.insert( [ { _id: 10, item: "large box"}, { _id: 11, item: "small box"} ] )`
-
-# mongoimport
-
-Import one or multiple documents in a collection
-
-- syntax `mongoimport -d cars -c carsList --drop --jsonArray`
-- TODO
 
 # Configuration
 
