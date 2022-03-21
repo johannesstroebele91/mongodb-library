@@ -2,11 +2,12 @@
 
 - [Basic](#basic)
 - [Important](#important)
-- [insertOne()](#insertone)
-- [insertMany()](#insertmany)
-- [insert()](#insert)
-- [Configuration](#configuration)
-- [Atomicity of write operations](#atomicity-of-write-operations)
+- [Operations](#operations)
+  - [insertOne()](#insertone)
+  - [insertMany()](#insertmany)
+  - [insert()](#insert)
+  - [Configure using `options` parameter](#configure-using-options-parameter)
+- [How failed and successful operations are handled (atomicity)](#how-failed-and-successful-operations-are-handled-atomicity)
 
 # Basic
 
@@ -43,21 +44,25 @@ If multiple data is inserted
   - PS an id key need to be always named like this `_id`
   - PS prevents multiple objects with the same id
 
-# insertOne()
+# Operations
+
+_The most important create operations are insertOne(), insertMany(), and insert()_
+
+## insertOne()
 
 Create one document in a collection
 
 - syntax `insertOne(data, options)`
 - e.g. `db.products.insertOne({"name": "Max"})`
 
-# insertMany()
+## insertMany()
 
 Create one or multiple documents in a collection
 
 - syntax `insertMany(data, options)`
 - e.g. `db.products.insertMany( [ { _id: 10, item: "large box"}, { _id: 11, item: "small box"} ] )`
 
-# insert()
+## insert()
 
 Create one or multiple documents in a collection
 
@@ -67,7 +72,7 @@ Create one or multiple documents in a collection
   - e.g. `db.products.insert({"name": "Max"})`
   - e.g. `db.products.insert( [ { _id: 10, item: "large box"}, { _id: 11, item: "small box"} ] )`
 
-# Configuration
+## Configure using `options` parameter
 
 Via the `options` parameter, the insert can be modified:
 
@@ -106,7 +111,7 @@ Via the `options` parameter, the insert can be modified:
         - if there is an error,
         - so they know that the data was not changed
 
-# Atomicity of write operations
+# How failed and successful operations are handled (atomicity)
 
 MongoDB guarantees
 
