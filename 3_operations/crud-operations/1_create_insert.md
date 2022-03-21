@@ -6,6 +6,7 @@
 - [insertMany()](#insertmany)
 - [insert()](#insert)
 - [mongoimport](#mongoimport)
+- [Configuration](#configuration)
 
 # Basic
 
@@ -19,6 +20,16 @@ Parameters are:
 
 - data: object that should be created written as a key-value pair
 - options: configuration
+
+If multiple data is inserted
+
+- MongoDB writes the data into the database
+- until it
+  - succeeds OR
+  - a error occurs
+    - e.g. a duplicate key
+    - e.g. a wrong schema
+    - IMPORTANT: all documents until the document with the error are inserted!
 
 # Important
 
@@ -62,3 +73,23 @@ Import one or multiple documents in a collection
 
 - syntax `mongoimport -d cars -c carsList --drop --jsonArray`
 - TODO
+
+# Configuration
+
+Via the `options` parameter, the insert can be modified:
+
+- `ordered: boolean`: allows to specify wether the client should perform
+  - an ordered insert (true is default)
+    - false controls that MongoDB inserts all documents and
+    - does not abort after the first document with an error
+    - (so it practically just skips the incorrect document)
+  - e.g. `db.hobbies.insertMany([{_id: "Yoga", name: "Yoga"}, {_id: "Cooking", name: "Cooking"}, {_id: "Hiking", name: "Hiking"}], {ordered: false})`
+- writing concern: this options controls the writing: e.g. `db.persons.insertOne({name: "Max"}, {writeConcern: {w: 1, j: undefined}})` (DEFAULT)
+  - `w: <value>`: specified that the write operation has
+    - propagated to a specified number of mongod instances or to mongod instances with specified tags
+    - `w: 1` e.g. `db.persons.insertOne({name: "Max"}, {writeConcern: {w: 1}})` (DEFAULT!)
+      - executes the operation with moderate speed and
+      - returns information about success or failure
+    - `w: 0` e.g. `db.persons.insertOne({name: "Max"}, {writeConcern: {w: 0}})`
+      - executes the operation the fastest,
+      - BUT returns no information about success or failure

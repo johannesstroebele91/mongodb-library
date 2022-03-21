@@ -11,6 +11,7 @@ The most important basic commands are:
 - Delete a collection `db.myCollection.drop()`
   - myCollection needs to be replaced with
   - the name of the collection
+- Clear the command line using `cls`
 
 # Get help
 
