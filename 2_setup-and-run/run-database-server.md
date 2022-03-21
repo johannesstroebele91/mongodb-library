@@ -51,6 +51,7 @@ The `mongod` command can be configured by adding options (`mongod --help` for mo
 - store each database in a **separate directory** `mongod --directoryperdb`
   - is advantages if working with many databases
   - which is often the case
+- Start MongoDB server for a non-default port: e.g. `mongod --port 27018`
 - **Fork** a server process `mongod --fork --logpath C:\...\logs\mongod.log`
   - runs the MongoDB as a service in the background
     - so it is started as a child instead of a parent (foreground) process
@@ -73,7 +74,7 @@ The `mongod` command can be configured by adding options (`mongod --help` for mo
         - opening an terminal as an administrator and
         - running `net stop MongoDB`
 - Use **authentication** to control who can change the database `mongod --auth` (TODO)
-- **SSL certification** is important for security (TODO)
+- **SSL** is important for security (TODO)
 - **Replication** is important for security (TODO)
   - a replica set is a group of mongod processes that maintain the same data set
   - it enables to provide a level of fault tolerance against the loss of a single database server
