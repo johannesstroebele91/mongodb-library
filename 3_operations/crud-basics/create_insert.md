@@ -4,6 +4,8 @@
 - [Important](#important)
 - [insertOne()](#insertone)
 - [insertMany()](#insertmany)
+- [insert()](#insert)
+- [mongoimport](#mongoimport)
 
 # Basic
 
@@ -26,7 +28,7 @@ Parameters are:
   - a message will appear if the command was executed successfully
   - `{ acknowledged: true, insertedId: ObjectId("6232f415509d5adfc7a77a0a") }`
   - and an id automatically generated
-- an id is automatically generated, but can be added manually like this `{ _id: "someIdz3482as"}`
+- an id is automatically generated if none is specified manually `{ _id: "someIdz3482as"}`
   - PS an id key need to be always named like this `_id`
   - PS prevents multiple objects with the same id
 
@@ -43,3 +45,20 @@ Create one or multiple documents in a collection
 
 - syntax `insertMany(data, options)`
 - e.g. `db.products.insertMany( [ { _id: 10, item: "large box"}, { _id: 11, item: "small box"} ] )`
+
+# insert()
+
+Create one or multiple documents in a collection
+
+- is the ancestor of insertOne() and insertMany()
+- should not be used anymore
+- Examples are similar to insertOne() and insertMany()
+  - e.g. `db.products.insert({"name": "Max"})`
+  - e.g. `db.products.insert( [ { _id: 10, item: "large box"}, { _id: 11, item: "small box"} ] )`
+
+# mongoimport
+
+Import one or multiple documents in a collection
+
+- syntax `mongoimport -d cars -c carsList --drop --jsonArray`
+- TODO
