@@ -7,6 +7,7 @@
 - [insert()](#insert)
 - [mongoimport](#mongoimport)
 - [Configuration](#configuration)
+- [Atomicity of write operations](#atomicity-of-write-operations)
 
 # Basic
 
@@ -112,3 +113,27 @@ Via the `options` parameter, the insert can be modified:
       - IMPORTANT: communicate to the user
         - if there is an error,
         - so they know that the data was not changed
+
+# Atomicity of write operations
+
+MongoDB guarantees
+
+- atomic transaction
+- for each document
+
+So it guarantees that
+
+- for each document
+- a operation (e.g. `insertOne()`) either
+  - succeeds as a whole OR
+  - fails as a whole (rolled back (i.e. NOTHING is saved))
+- so MongoDB prohibits that
+  - partial documents are created
+  - using `insertOne()`
+
+IMPORTANT!
+
+- only counts for `insertOne()`,
+- NOT `insertMany()`
+  - but that can be handled using transactions
+  - TODO
