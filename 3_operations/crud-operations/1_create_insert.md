@@ -87,9 +87,28 @@ Via the `options` parameter, the insert can be modified:
 - writing concern: this options controls the writing: e.g. `db.persons.insertOne({name: "Max"}, {writeConcern: {w: 1, j: undefined}})` (DEFAULT)
   - `w: <value>`: specified that the write operation has
     - propagated to a specified number of mongod instances or to mongod instances with specified tags
-    - `w: 1` e.g. `db.persons.insertOne({name: "Max"}, {writeConcern: {w: 1}})` (DEFAULT!)
-      - executes the operation with moderate speed and
-      - returns information about success or failure
-    - `w: 0` e.g. `db.persons.insertOne({name: "Max"}, {writeConcern: {w: 0}})`
-      - executes the operation the fastest,
-      - BUT returns no information about success or failure
+    - main possibilities:
+      - `w: 1` e.g. `db.persons.insertOne({name: "Max"}, {writeConcern: {w: 1}})` (DEFAULT!)
+        - executes the operation with moderate speed and
+        - returns information about success or failure
+      - `w: 0` e.g. `db.persons.insertOne({name: "Max"}, {writeConcern: {w: 0}})`
+        - executes the operation the fastest,
+        - BUT returns no information about success or failure
+  - `j: <boolean>`: specified that the write operation has been written to the on-disk journal
+    - Journal is a backup todo list
+      - that the operation is saved
+      - in case the server should face issues (e.g. memory shuts down)
+      - so the operation (e.g. `insertMany()`) is stored for later execution
+      - which therefore leads to a higher level of security
+    - main possibilities:
+      - `j: false` e.g. `db.persons.insertOne({name: "Max"}, {j: undefined})`
+        - by default the journal is not used
+        - because it is only useful in certain cases
+      - `j: true` this option is but can be activated e.g. `db.persons.insertOne({name: "Max"}, {j: true})`
+  - `wtimeout: <number>`: specify a time limit to prevent write operations from blocking indefinitely
+    - important if you have
+      - big operations to multiple replica sets and
+      - your connection is not great
+      - IMPORTANT: communicate to the user
+        - if there is an error,
+        - so they know that the data was not changed
