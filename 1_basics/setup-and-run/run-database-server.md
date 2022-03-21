@@ -1,5 +1,7 @@
 # Basics
 
+Reference: https://docs.mongodb.com/manual/reference/program/mongod/
+
 Multiple methods exist
 
 - to start the MongoDB database server
@@ -8,7 +10,18 @@ Multiple methods exist
 1. Automatic start via service (Windows only)
    - when the system is starting
    - Installation: via setup wizard by checking "Install MongoD as a Service"
-2. Manual start as a process via terminal (all operation systems, example for windows)
+2. Manual start terminal: process and config file
+   - Ref: https://docs.mongodb.com/manual/reference/configuration-options/
+   - Enables to save a
+     - reusable blueprint of the settings in a file
+     - that can be easily used to start a server
+   - It needs to be setup by:
+     - creating a config file `mongod.cfg`
+     - e.g. `C:\...\MongoDB\Server\4.4\bin`
+   - start it by
+     - Open terminal
+     - Run cmd `mongod --config "C:\..\MongoDB\Server\4.4\bin\mongod.cfg"` (short `mongod -f "C:\..\MongoDB\Server\4.4\bin\mongod.cfg"`)
+3. Manual start terminal: process via terminal and dbpath (all operation systems, example for windows)
    - identify the db path which can be everywhere, for example:
      - installation folder for mongodb e.g.`C:\Program Files\MongoDB\Server\4.4`
      - in the root folder `C:\data`
@@ -18,7 +31,7 @@ Multiple methods exist
      - unix /macos: terminal -> `grep dbpath /etc/mongodb.conf`
    - Run: `mongod --dbpath ...\data` or in case auth should be used with `mongod --dbpath ...\data --auth`
    - Run: `net start MongoDB` (`net stop MongoDB` to stop the service)
-3. Manual start via service (all operation systems, example for windows)
+4. Manual start via service (all operation systems, example for windows)
    - Open Windows menu
    - Search for Service
    - Search for MongoDB server
