@@ -79,7 +79,7 @@ Import one or multiple documents in a collection
 
 Via the `options` parameter, the insert can be modified:
 
-- `ordered: boolean`: allows to specify wether the client should perform
+- `ordered: <boolean>`: allows to specify wether the client should perform
   - an ordered insert (true is default)
     - false controls that MongoDB inserts all documents and
     - does not abort after the first document with an error
@@ -102,10 +102,10 @@ Via the `options` parameter, the insert can be modified:
       - so the operation (e.g. `insertMany()`) is stored for later execution
       - which therefore leads to a higher level of security
     - main possibilities:
-      - `j: false` e.g. `db.persons.insertOne({name: "Max"}, {j: undefined})`
+      - `j: false` e.g. `db.persons.insertOne({name: "Max"}, {writeConcern: {w: 1, j: undefined}})`
         - by default the journal is not used
         - because it is only useful in certain cases
-      - `j: true` this option is but can be activated e.g. `db.persons.insertOne({name: "Max"}, {j: true})`
+      - `j: true` this option is but can be activated e.g. `db.persons.insertOne({name: "Max"}, {writeConcern: {w: 1, j: true}})`
   - `wtimeout: <number>`: specify a time limit to prevent write operations from blocking indefinitely
     - important if you have
       - big operations to multiple replica sets and
