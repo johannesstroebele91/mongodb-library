@@ -114,7 +114,9 @@ Documents can be found using these query selectors:
     - IMPORTANT
       - an element is included although it might have the value `null`
       - e.g.`db.users.find({age: {$exists: false, $ne: null}})`
-  - `type`: finds all documents that have an element that exists
+  - `type`: e.g. "string", "double" (e.g. 2.42, 0213), "int" (e.g. 7, 32)
+    - finds all documents which element have a certain **type** e.g. `db.users.find({phone: {$type: "string"}})`
+    - finds all documents which element have certain **types** e.g. `db.users.find({phone: {$type: ["int", "string"]}})`
 - evaluation
   - ``:
 - array
