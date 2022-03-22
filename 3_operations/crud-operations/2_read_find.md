@@ -9,25 +9,40 @@
 Get one or multiple documents
 
 - in a collection
-- e.g. `db.products.find(filter, options)`
-- by passing the parameters:
-  - Filter: narrow down which documents to change
-  - Options: configuration
+- e.g. `db.myCollection.find(filter, options)`
+  - `db` access current database
+  - `myCollection`access a collection (gets created if does not exists)
+  - `find(filter, options)` method that gets executed on the collection, which parameters:
+    - Filter: narrow down which documents to change
+    - Options: configuration
 
 # find()
 
-Get one or multiple documents
+Without filter (**all** documents in a collection)
 
-- syntax `db.products.find(filter, options)`
-- find all documents in a collection limited e.g. `db.products.find()`
-- find all documents in a collection without limits e.g. `db.products.find().toArray()`
+- limited e.g. `db.products.find()`
+- without limits e.g. `db.products.find().toArray()`
 - find all documents and modify / print them `db.passengers.find().forEach((passengerData) => {printjson(passengerData)})`
-- find one or multiple documents in a collection
-  - that match the filter criteria
-  - e.g. `flightData.find({intercontinental: true})`
-- find alle documents where the filter criteria
-  - is e.g. greater than something `distance: {$gt: 10000}`
-  - e.g. `db.flightData.find({distance: {$gt: 10000}})`
+
+With a filter by
+
+- match equality against a **single value**: e.g. `flightData.find({intercontinental: true})` OR
+- match using a **query selectors and projection operators**:
+  1. **query selectors**: locate data using
+     - comparison:
+     - logical:
+     - element:
+     - evaluation:
+     - array:
+     - comments:
+     - geospatial e.g. near some location
+     - e.g. `$eq`
+     - e.g. range filter e.g. greater than `db.flightData.find({distance: {$gt: 10000}})`
+  2. **projetion operators**: modify the data presentation
+     - `$`
+     - `$elemMatch`
+     - `$meta`
+     - `$slice`
 
 Important:
 

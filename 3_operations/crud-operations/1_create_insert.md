@@ -15,22 +15,19 @@ Create inserts
 
 - one or more JSON objects
 - by passing a respective object
-- e.g. `insertOne(data, options)`
-
-Parameters are:
-
-- data: object that should be created written as a key-value pair
-- options: configuration
+- e.g. `db.myCollection.insertOne(data, options)`
+  - `db` access current database
+  - `myCollection`access a collection (gets created if does not exists)
+  - `insertOne(data, options)` method that gets executed on the collection, which parameters:
+    - data: object that should be created written as a key-value pair
+    - options: configuration
 
 If multiple data is inserted
 
 - MongoDB writes the data into the database
-- until it
-  - succeeds OR
-  - a error occurs
-    - e.g. a duplicate key
-    - e.g. a wrong schema
-    - IMPORTANT: all documents until the document with the error are inserted!
+- until it succeeds OR an error occurs:
+  - e.g. duplicate key, wrong schema
+  - IMPORTANT: all documents until the document with the error are inserted!
 
 # Important
 
