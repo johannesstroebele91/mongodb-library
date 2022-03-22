@@ -30,7 +30,7 @@ Several methods exist to start the new shell
 Multiple methods exist to send commants (e.g. CRUD-operations) to the MongoDB database server:
 
 1. Open terminal > `mongo`
-2. Open terminal > `C:\Users\stroebele\AppData\Local\Programs\mongosh`
+2. Open terminal > `C:\...\AppData\Local\Programs\mongosh`
 3. Open installation folder of mongo > `mongo.exe`
    - identify where the file (also `mongosh.exe` possible) was installed
      - windows:
