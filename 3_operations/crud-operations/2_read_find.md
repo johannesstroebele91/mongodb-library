@@ -95,10 +95,20 @@ Documents can be found using these query selectors:
   - `lt`: lower then e.g. `db.movies.findOne({runtime: {$lt: 60}})`
   - `lte`: lower then OR equals e.g. `db.movies.findOne({runtime: {$lt: 60}})`
 - logical
-  - `and`:
-  - `not`:
   - `or`: documents that match any of the conditions e.g. `db.movies.find({$or: [{"rating.average": {$lt: 5}}, {"rating.average": {$gt: 9.3}}]})`
   - `nor`: documents that DON'T match any of the conditions e.g. `db.movies.find({$nor: [{"rating.average": {$lt: 5}}, {"rating.average": {$gt: 9.3}}]})`
+  - `and`: all found documents must match elements of the array
+    - IMPORTANT:
+      - `db.movies.find({"rating.average": {$gt: 9}, genres: "Drama"})` is in most cases as
+      - the same as `db.movies.find({$and: [{"rating.average": {$gt: 9}}, {genres: "Drama"}]})`
+    - BUT `$and` solution is more secure
+      - because if properties are used multiple times in a filter
+      - e.g. `db.movies.find({"rating.average": {$gt: 9}, genres: "Drama"})`
+      - ONLY the last mention of the property is used!!!
+      - SO in that case `$and` NEEDS to be used
+  - `not`: find documents that include not a certain value e.g. `db.movies.find({runtime: {$not: {$eq: 60}}})`
+    - is more complex, and can mostly be substituted with easier statements using `$ne`
+    - e.g. `db.movies.find({runtime: {$ne: 60}})`
 - element
   - ``:
 - evaluation
