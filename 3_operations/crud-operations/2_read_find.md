@@ -118,7 +118,11 @@ Documents can be found using these query selectors:
     - finds all documents which element have a certain **type** e.g. `db.users.find({phone: {$type: "string"}})`
     - finds all documents which element have certain **types** e.g. `db.users.find({phone: {$type: ["int", "string"]}})`
 - evaluation
-  - ``:
+  - `regex`: allows to search for text in a key-value pair of a document
+    - e.g. normal search like `db.movies.find({summary: "musical"})` only looks for full equality!!
+    - regex enables to search for parts of text in a key-value pair e.g. `db.movies.find({summary: {$regex: /musical/}})`
+      - a regex expression is always surrounded by `//`
+      - and have in between e.g. `/musical/`
 - array
   - ``:
 - comments
