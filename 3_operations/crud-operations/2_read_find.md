@@ -69,17 +69,18 @@ Actually filter the documents in a collection
 - match using a **query selectors and projection operators**:
   1. **query selectors**: locate data using
      - comparison:
-       - `eq`: equality differs for primitive data and arrays:
+       - `eq`: find documents which equal one value certain values, whereby equality differs for primitive data and arrays:
          - primitive data e.g. `db.movies.findOne({runtime: {$eq: 60}})` is the same as `db.movies.findOne({runtime: 60})`
          - arrays
            - contains the element e.g. `db.movies.findOne({genres: {$eq: "Drama"}})` is the same as `db.movies.findOne({genres: "Drama"})`
            - ONLY contains the element e.g. `db.movies.findOne({genres: {$eq: ["Drama"]}})` is the same as `db.movies.findOne({genres: ["Drama"]})`
+       - `ne`: find documents which equal NOT one value e.g. `db.movies.findOne({runtime: {$ne: 60}})`
+       - `in`: find documents which equal MULTIPLE values e.g. `db.movies.findOne({runtime: {$in: [30, 42]}})`
+       - `nin`: find documents which NOT equal MULTIPLE values e.g. `db.movies.findOne({runtime: {$nin: [30, 42]}})`
        - `gt`: greater then e.g. `db.movies.findOne({runtime: {$gt: 60}})`
        - `gte`: greater then OR equals e.g.`db.movies.findOne({runtime: {$gte: 60}})`
        - `lt`: lower then e.g. `db.movies.findOne({runtime: {$lt: 60}})`
        - `lte`: lower then OR equals e.g. `db.movies.findOne({runtime: {$lt: 60}})`
-       - `in`: e.g.
-       - `ne`: e.g. `db.movies.findOne({runtime: {$ne: 60}})`
      - logical: (e.g. ``)
      - element: (e.g. ``)
      - evaluation: (e.g. ``)
