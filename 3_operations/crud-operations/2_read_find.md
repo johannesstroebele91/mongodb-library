@@ -74,10 +74,10 @@ Actually filter the documents in a collection
          - arrays
            - contains the element e.g. `db.movies.findOne({genres: {$eq: "Drama"}})` is the same as `db.movies.findOne({genres: "Drama"})`
            - ONLY contains the element e.g. `db.movies.findOne({genres: {$eq: ["Drama"]}})` is the same as `db.movies.findOne({genres: ["Drama"]})`
-       - `eq`: e.g. `db.movies.findOne({runtime: {$eq: 60}})` is the same as `db.movies.findOne({runtime: 60})`
-       - `gt`: e.g. `db.movies.findOne({runtime: {$gt: 60}})`
-       - `gte`: e.g.`db.movies.findOne({runtime: {$gte: 60}})`
-       - `lt`: e.g. `db.movies.findOne({runtime: {$lt: 60}})`
+       - `gt`: greater then e.g. `db.movies.findOne({runtime: {$gt: 60}})`
+       - `gte`: greater then OR equals e.g.`db.movies.findOne({runtime: {$gte: 60}})`
+       - `lt`: lower then e.g. `db.movies.findOne({runtime: {$lt: 60}})`
+       - `lte`: lower then OR equals e.g. `db.movies.findOne({runtime: {$lt: 60}})`
        - `in`: e.g.
        - `ne`: e.g. `db.movies.findOne({runtime: {$ne: 60}})`
      - logical: (e.g. ``)
