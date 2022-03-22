@@ -123,6 +123,11 @@ Documents can be found using these query selectors:
     - regex enables to search for parts of text in a key-value pair e.g. `db.movies.find({summary: {$regex: /musical/}})`
       - a regex expression is always surrounded by `//`
       - and have in between e.g. `/musical/`
+  - `expr`: expression find documents where the comparison of two fields inside of the respective document equals true
+    - e.g. where the volume is greater than the target for financial data `db.sales.find({$expr: {$gt: ["$volume", "$target"]}})`
+    - to access the value of the key-value pairs `"$someKey"` is needed
+    - e.g. `db.sales.find({$expr: {$gt: [{$cond: {if: {$gte: ["$volume", 190]}, then: 190}}]}})`
+    - e.g. `db.sales.find({$expr: {$gt: [{$cond: {if: {$gte: ["$volume", 190]}, then: {$subtract: ["$volume", 10]}, else: "$volume"}}]}})`
 - array
   - ``:
 - comments
