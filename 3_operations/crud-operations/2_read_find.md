@@ -45,6 +45,15 @@ Get **all** documents in a collection by passing
   - without limits e.g. `db.myCollection.find().toArray()`
   - find all documents and modify / print them `db.passengers.find().forEach((passengerData) => {printjson(passengerData)})`
 
+Additional functions are possible after the find() method, such as:
+
+- `pretty()` print the data more nicely
+- `count` identify how many documents exist e.g. `db.myCollection.find().count()`
+- `max()` get the max value
+- `min()` get the min value
+- `map()` applies a function for each document and returns the new array
+- `forEach()` applies a function for each document and returns NOTHING!
+
 Important:
 
 - all documents are returned by passing no parameter
@@ -67,30 +76,45 @@ Actually filter the documents in a collection
 - can work with nested documents using "": e.g. `db.movies.findOne({"rating.average": {$gt: 7}})`
 - match equality against a **single value**: e.g. `flightData.find({intercontinental: true})` OR
 - match using a **query selectors and projection operators**:
-  1. **query selectors**: locate data using
-     - comparison:
-       - `eq`: find documents which equal one value certain values, whereby equality differs for primitive data and arrays:
-         - primitive data e.g. `db.movies.findOne({runtime: {$eq: 60}})` is the same as `db.movies.findOne({runtime: 60})`
-         - arrays
-           - contains the element e.g. `db.movies.findOne({genres: {$eq: "Drama"}})` is the same as `db.movies.findOne({genres: "Drama"})`
-           - ONLY contains the element e.g. `db.movies.findOne({genres: {$eq: ["Drama"]}})` is the same as `db.movies.findOne({genres: ["Drama"]})`
-       - `ne`: find documents which equal NOT one value e.g. `db.movies.findOne({runtime: {$ne: 60}})`
-       - `in`: find documents which equal MULTIPLE values e.g. `db.movies.findOne({runtime: {$in: [30, 42]}})`
-       - `nin`: find documents which NOT equal MULTIPLE values e.g. `db.movies.findOne({runtime: {$nin: [30, 42]}})`
-       - `gt`: greater then e.g. `db.movies.findOne({runtime: {$gt: 60}})`
-       - `gte`: greater then OR equals e.g.`db.movies.findOne({runtime: {$gte: 60}})`
-       - `lt`: lower then e.g. `db.movies.findOne({runtime: {$lt: 60}})`
-       - `lte`: lower then OR equals e.g. `db.movies.findOne({runtime: {$lt: 60}})`
-     - logical: (e.g. ``)
-     - element: (e.g. ``)
-     - evaluation: (e.g. ``)
-     - array: (e.g. ``)
-     - comments: (e.g. ``)
-     - geospatial e.g. near some location (e.g. ``)
-     - e.g. `$eq`
-     - e.g. range filter e.g. greater than `db.flightData.find({distance: {$gt: 10000}})`
-  2. **projetion operators**: modify the data presentation
-     - `$`
-     - `$elemMatch`
-     - `$meta`
-     - `$slice`
+
+1. **query selectors**
+
+Documents can be found using these query selectors:
+
+- comparison
+  - `eq`: find documents which equal one value certain values, whereby equality differs for primitive data and arrays:
+    - primitive data e.g. `db.movies.findOne({runtime: {$eq: 60}})` is the same as `db.movies.findOne({runtime: 60})`
+    - arrays
+      - contains the element e.g. `db.movies.findOne({genres: {$eq: "Drama"}})` is the same as `db.movies.findOne({genres: "Drama"})`
+      - ONLY contains the element e.g. `db.movies.findOne({genres: {$eq: ["Drama"]}})` is the same as `db.movies.findOne({genres: ["Drama"]})`
+  - `ne`: find documents which equal NOT one value e.g. `db.movies.findOne({runtime: {$ne: 60}})`
+  - `in`: find documents which equal MULTIPLE values e.g. `db.movies.findOne({runtime: {$in: [30, 42]}})`
+  - `nin`: find documents which NOT equal MULTIPLE values e.g. `db.movies.findOne({runtime: {$nin: [30, 42]}})`
+  - `gt`: greater then e.g. `db.movies.findOne({runtime: {$gt: 60}})`
+  - `gte`: greater then OR equals e.g.`db.movies.findOne({runtime: {$gte: 60}})`
+  - `lt`: lower then e.g. `db.movies.findOne({runtime: {$lt: 60}})`
+  - `lte`: lower then OR equals e.g. `db.movies.findOne({runtime: {$lt: 60}})`
+- logical
+  - `and`:
+  - `not`:
+  - `nor`:
+  - `or`:
+- element
+  - ``:
+- evaluation
+  - ``:
+- array
+  - ``:
+- comments
+  - ``:
+- geospatial e.g. near some location
+  - ``:
+
+1. **projetion operators**: modify the data presentation
+
+The data presentation can be modified using these projetion operators:
+
+- `$`
+- `$elemMatch`
+- `$meta`
+- `$slice`
