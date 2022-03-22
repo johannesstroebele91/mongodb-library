@@ -64,16 +64,28 @@ _Both findOne() and find() methods support all filter possibilities:_
 
 Actually filter the documents in a collection
 
+- can work with nested documents using "": e.g. `db.movies.findOne({"rating.average": {$gt: 7}})`
 - match equality against a **single value**: e.g. `flightData.find({intercontinental: true})` OR
 - match using a **query selectors and projection operators**:
   1. **query selectors**: locate data using
      - comparison:
-     - logical:
-     - element:
-     - evaluation:
-     - array:
-     - comments:
-     - geospatial e.g. near some location
+       - `eq`: equality differs for primitive data and arrays:
+         - primitive data e.g. `db.movies.findOne({runtime: {$eq: 60}})` is the same as `db.movies.findOne({runtime: 60})`
+         - arrays
+           - contains the element e.g. `db.movies.findOne({genres: {$eq: "Drama"}})` is the same as `db.movies.findOne({genres: "Drama"})`
+           - ONLY contains the element e.g. `db.movies.findOne({genres: {$eq: ["Drama"]}})` is the same as `db.movies.findOne({genres: ["Drama"]})`
+       - `eq`: e.g. `db.movies.findOne({runtime: {$eq: 60}})` is the same as `db.movies.findOne({runtime: 60})`
+       - `gt`: e.g. `db.movies.findOne({runtime: {$gt: 60}})`
+       - `gte`: e.g.`db.movies.findOne({runtime: {$gte: 60}})`
+       - `lt`: e.g. `db.movies.findOne({runtime: {$lt: 60}})`
+       - `in`: e.g.
+       - `ne`: e.g. `db.movies.findOne({runtime: {$ne: 60}})`
+     - logical: (e.g. ``)
+     - element: (e.g. ``)
+     - evaluation: (e.g. ``)
+     - array: (e.g. ``)
+     - comments: (e.g. ``)
+     - geospatial e.g. near some location (e.g. ``)
      - e.g. `$eq`
      - e.g. range filter e.g. greater than `db.flightData.find({distance: {$gt: 10000}})`
   2. **projetion operators**: modify the data presentation
