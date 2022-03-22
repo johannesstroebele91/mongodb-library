@@ -110,7 +110,11 @@ Documents can be found using these query selectors:
     - is more complex, and can mostly be substituted with easier statements using `$ne`
     - e.g. `db.movies.find({runtime: {$ne: 60}})`
 - element
-  - ``:
+  - `exists`: finds all documents that have an element that exists e.g. `db.users.find({age: {$exists: true}})`
+    - IMPORTANT
+      - an element is included although it might have the value `null`
+      - e.g.`db.users.find({age: {$exists: false, $ne: null}})`
+  - `type`: finds all documents that have an element that exists
 - evaluation
   - ``:
 - array
