@@ -45,7 +45,7 @@ Get **all** documents in a collection by passing
   - without limits e.g. `db.myCollection.find().toArray()`
   - find all documents and modify / print them `db.passengers.find().forEach((passengerData) => {printjson(passengerData)})`
 
-Additional functions are possible after the find() method, such as:
+**Additional functions** are possible after the find() method, such as:
 
 - `pretty()` print the data more nicely
 - `count` identify how many documents exist e.g. `db.myCollection.find().count()`
@@ -97,8 +97,8 @@ Documents can be found using these query selectors:
 - logical
   - `and`:
   - `not`:
-  - `nor`:
-  - `or`:
+  - `or`: documents that match any of the conditions e.g. `db.movies.find({$or: [{"rating.average": {$lt: 5}}, {"rating.average": {$gt: 9.3}}]})`
+  - `nor`: documents that DON'T match any of the conditions e.g. `db.movies.find({$nor: [{"rating.average": {$lt: 5}}, {"rating.average": {$gt: 9.3}}]})`
 - element
   - ``:
 - evaluation
