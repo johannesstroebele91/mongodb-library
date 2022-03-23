@@ -153,8 +153,8 @@ Documents can be found using these query selectors:
     - .g. `db.movieStars.find({genre: ["action", "thriller"]})`
     - where the order of elements in an array is important
 - `elemMatch`: find documents which elements look a certain way
-  - e.g. `db.users.find({hobbies: {$elemMatch: {$gte: 30, $lt: 50}}}})`
-  - e.g. `db.users.find({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 3}}}})`
+  - for arrays with primitive data as elements e.g. `db.exmoviestars.find({ratings: {$elemMatch: {$gt: 8, $lt: 10}}})`
+  - for arrays with objects as elements e.g. `db.users.find({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 3}}}})`
     - why not use `ànd`?
       - because it cannot control that
       - both conditions need to be met by
