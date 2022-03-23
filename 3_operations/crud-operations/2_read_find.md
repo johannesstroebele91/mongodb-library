@@ -28,7 +28,8 @@ Get the first matching document it finds
 
 - syntax `db.myCollection.findOne(filter, options)`
 - e.g. `db.myCollection.findOne({ name: 1, contribs: 1 } )`
-- gives back a document (not a cursor)
+- gives back a document (NOT a cursor)
+- arrays can be accessed via nested keys e.g. `db.users.findOne({"hobbies.title": "Sports"})`
 
 ## find()
 
@@ -37,6 +38,7 @@ Get one or more documents
 - syntax `db.myCollection.find(filter, options)`
 - e.g. `db.myCollection.find()`
 - gives a cursor (not a document)
+- arrays can be accessed via nested keys e.g. `db.users.find({"hobbies.title": "Sports"})`
 
 Get **all** documents in a collection by passing
 

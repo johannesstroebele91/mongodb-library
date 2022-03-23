@@ -7,7 +7,7 @@ Nested documents can be accessed by
   - MongoDB is smart enough to know
   - which data type is specified
   - e.g. `hobbies` is an array that can have `sports`
-- find all documents hat have a nested field `db.flightData.find({"status.description": "on-time"})`
+- find all documents hat have a nested field `db.flightData.find({"status.description": "on-time"}`
   - the nested field needs to be
   - wrapped in "" like `"status.description"`
 
