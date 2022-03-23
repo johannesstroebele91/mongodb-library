@@ -100,7 +100,9 @@ Documents can be found using these query selectors:
 
 **logical**
 
-- `or`: documents that match any of the conditions e.g. `db.movies.find({$or: [{"rating.average": {$lt: 5}}, {"rating.average": {$gt: 9.3}}]})`
+- `or`: documents that match any of the conditions
+  - primitive data e.g. `db.movies.find({$or: [{"rating.average": {$lt: 5}}, {"rating.average": {$gt: 9.3}}]})`
+  - arrays e.g. `db.users.find({$or: [{"hobbies.title": "Yoga"}, {"hobbies.title": "Sports"}]})`
 - `nor`: documents that DON'T match any of the conditions e.g. `db.movies.find({$nor: [{"rating.average": {$lt: 5}}, {"rating.average": {$gt: 9.3}}]})`
 - `and`: all found documents must match elements of the array
   - IMPORTANT:
@@ -141,6 +143,15 @@ Documents can be found using these query selectors:
 
 **array**
 
+- `size`: find docus with exact amount of elements in an nested array
+  - until now, MongoDB only supports exact sizes, no $gt or $lt
+  - e.g. `db.users.find({hobbies: {$size: 3}})`
+- `all`: find docus that have arrays that
+  - ONLY include the following elements in a unsorted order
+  - e.g. `db.movieStars.find({genre: {$all: ["action", "thriller"]}})`
+  - which is in contrast to
+    - .g. `db.movieStars.find({genre: ["action", "thriller"]})`
+    - where the order of elements in an array is important
 - ``:
 
 **comments**
