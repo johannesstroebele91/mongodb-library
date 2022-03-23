@@ -74,7 +74,9 @@ Not all documents are return via find()
 
 - because it could potentially yield millions of documents
 - therefore MongoDB aborts after a certian amount of objects
-  - the command `it` can be used to show more
+  - the command `it` can be used to show more of the request batch
+  - and is also good because mostly many documents (e.g. products)
+  - are shown on multiple pages
 
 The reason that `it` command is possible is
 
