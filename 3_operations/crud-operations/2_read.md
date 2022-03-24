@@ -5,7 +5,6 @@
   - [findOne()](#findone)
   - [find()](#find)
     - [basics](#basics)
-    - [Additional functions](#additional-functions)
     - [Cursors](#cursors)
 - [Filter](#filter)
 
@@ -33,6 +32,7 @@ Get the first matching document it finds
 - e.g. `db.myCollection.findOne({ name: 1, contribs: 1 } )`
 - gives back a document (NOT a cursor)
 - arrays can be accessed via nested keys e.g. `db.users.findOne({"hobbies.title": "Sports"})`
+- access a single field: e.g. `db.movies.findOne().runtime` => Output: 60
 
 ## find()
 
@@ -44,6 +44,7 @@ Get one or more documents
 - e.g. `db.myCollection.find()`
 - gives a cursor (not a document)
 - arrays can be accessed via nested keys e.g. `db.users.find({"hobbies.title": "Sports"})`
+- a nicer format for an output can be archived via `db.products.find().pretty()`
 
 Get **all** documents in a collection by passing
 
@@ -51,22 +52,6 @@ Get **all** documents in a collection by passing
   - limited e.g. `db.myCollection.find()`
   - without limits e.g. `db.myCollection.find().toArray()`
   - find all documents and modify / print them `db.passengers.find().forEach((passengerData) => {printjson(passengerData)})`
-
-### Additional functions
-
-Are possible after the find() method, such as:
-
-- `pretty()` print the data more nicely
-- `count` identify how many documents exist e.g. `db.myCollection.find().count()`
-- `max()` get the max value
-- `min()` get the min value
-- `map()` applies a function for each document and returns the new array
-- `forEach()` applies a function for each document and returns NOTHING!
-
-Important:
-
-- all documents are returned by passing no parameter
-- a nicer format for an output can be archived via `db.products.find().pretty()`
 
 ### Cursors
 
@@ -89,6 +74,13 @@ In contrast the function `.toArray()`
 - will exhaust the cursor object and
 - show every document
 - so it should be used cautiously
+
+**Functions that can be attached via the cursor** to the find() method, such as:
+
+- `pretty()` print the data more nicely e.g. `db.myCollection.find().pretty()`
+- `count()` identify how many documents exist e.g. `db.myCollection.find().count()`
+- `max()` get the max value e.g. `db.myCollection.find().pretty()`
+- `min()` get the min value
 
 # Filter
 
