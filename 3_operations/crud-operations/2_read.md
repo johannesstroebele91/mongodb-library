@@ -94,6 +94,11 @@ In contrast the function `.toArray()`
   - PS if there are no more docus left (cursor is exhausted),
     - a error is displayed
     - which can be checked manually via e.g. `dataCursor.hasNext()`
+- `sort()` sort docus in a collection via
+  - using one criteria
+    - ascending: value `1` e.g. `db.movies.find().sort({"rating.average": 1})`
+    - descending: value `-1` e.g. `db.movies.find().sort({"rating.average": -1})`
+  - using multiple criteria e.g. `db.movies.find().sort({"rating.average": -1, runtime: -1})`
 
 # Filter
 
