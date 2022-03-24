@@ -118,4 +118,4 @@ Actually filter the documents in a collection
 - match equality against a **single value**: e.g. `flightData.find({intercontinental: true})` OR
 - match using a **query selectors and projection operators**, which are explained in
   - `query-selectors.md` and
-  - `projetion-operators.md`
+  - `read_returnCertainFields.md`

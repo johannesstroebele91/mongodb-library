@@ -11,6 +11,7 @@
   - [One array](#one-array)
   - [The field specified in the filter](#the-field-specified-in-the-filter)
   - [Find docus with "drama" and only display "horror"](#find-docus-with-drama-and-only-display-horror)
+- [Projection operators](#projection-operators)
 
 # Relevance
 
@@ -119,3 +120,17 @@ Output:
 { _id: ObjectId("6238d40ca85864906e63df8b"),
   genres: [ 'Horror' ] }
 ```
+
+# Projection operators
+
+Projetion operators modify the data presentation:
+
+- `$`: specify the field specified in the filter
+  - e.g. `db.movies.findOne({genres: "Drama"}, {"genres.$": 1})`
+- `$elemMatch`:
+  - find docus with "drama" and only display "horror"
+  - e.g. `db.movies.find({genres: "Drama"}, {genres: {$elemMatch: {$eq: "Horror"}}})`
+- `$meta`
+- `$slice`
+  - display only first 2 elements in a array e.g. `db.movies.find({"rating.average": {$gt: 9}}, {genres: {$slice: 2}})`
+  - display a range of elements in an array e.g. `db.movies.find({"rating.average": {$gt: 9}}, {genres: {$slice: [1,2]}})`
