@@ -7,6 +7,10 @@
   - [One field and omitting the id](#one-field-and-omitting-the-id)
   - [Multiple fields](#multiple-fields)
   - [Nested field](#nested-field)
+- [Examples for arrays](#examples-for-arrays)
+  - [One array](#one-array)
+  - [The field specified in the filter](#the-field-specified-in-the-filter)
+  - [Find docus with "drama" and only display "horror"](#find-docus-with-drama-and-only-display-horror)
 
 # Relevance
 
@@ -85,4 +89,33 @@ Output:
 
 ```BSON
 { rating: { average: 8 } }
+```
+
+# Examples for arrays
+
+## One array
+
+`db.movies.findOne({genres: "Drama", _id: 0})`
+
+```BSON
+{ genres: [ 'Drama', 'Action', 'Science-Fiction' ] }
+```
+
+## The field specified in the filter
+
+`db.movies.findOne({genres: "Drama"}, {"genres.$": 1})`
+
+```BSON
+{ genres: [ 'Drama', 'Action', 'Science-Fiction' ] }
+```
+
+## Find docus with "drama" and only display "horror"
+
+`db.movies.find({genres: "Drama"}, {genres: {$elemMatch: {$eq: "Horror"}}})`
+
+```BSON
+{ _id: ObjectId("6238d40ca85864906e63df88") }
+{ _id: ObjectId("6238d40ca85864906e63df8a") }
+{ _id: ObjectId("6238d40ca85864906e63df8b"),
+  genres: [ 'Horror' ] }
 ```
