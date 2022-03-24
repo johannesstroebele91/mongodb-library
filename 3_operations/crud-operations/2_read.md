@@ -99,6 +99,14 @@ In contrast the function `.toArray()`
     - ascending: value `1` e.g. `db.movies.find().sort({"rating.average": 1})`
     - descending: value `-1` e.g. `db.movies.find().sort({"rating.average": -1})`
   - using multiple criteria e.g. `db.movies.find().sort({"rating.average": -1, runtime: -1})`
+- `skip `skip cursor results
+  - e.g. skip first 10 results to display items on the second page (pagination)
+  - `db.movies.find().sort({"rating.average": -1}).skip(10)`
+  - PS MongoDB will automatically sort first, then skip, then limit (your order doesn't matter)
+- `limit` limit cursor results
+  - e.g. limit the returned results by 2
+  - e.g. `db.movies.find().sort({"rating.average": -1}).limit(2)`
+  - PS MongoDB will automatically sort first, then skip, then limit (your order doesn't matter)
 
 # Filter
 
