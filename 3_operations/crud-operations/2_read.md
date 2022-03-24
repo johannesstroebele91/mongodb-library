@@ -81,6 +81,12 @@ In contrast the function `.toArray()`
 - `count()` identify how many documents exist e.g. `db.myCollection.find().count()`
 - `max()` get the max value e.g. `db.myCollection.find().pretty()`
 - `min()` get the min value
+- `map()` applies a function for each document and returns the new array
+- `forEach()` applies a function for each document and returns NOTHING!
+  - print all docus in a collection via e.g. `db.movies.find().forEach(doc => {printjson(doc)})`
+  - also the cursor can be stored as before
+    1. `const dataCursor = db.movies.find()`
+    2. `dataCursor.forEach(doc => {printjson(job)})`
 
 # Filter
 
