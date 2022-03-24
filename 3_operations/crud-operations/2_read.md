@@ -87,6 +87,13 @@ In contrast the function `.toArray()`
   - also the cursor can be stored as before
     1. `const dataCursor = db.movies.find()`
     2. `dataCursor.forEach(doc => {printjson(job)})`
+- `next()` enables to navigate the documents in a collection by:
+  1. saving the cursor in a variable `const dataCursor = db.movies.find()`
+  2. find the first document of the cursor `dataCursor.next()`
+  3. find the next document of the cursor `dataCursor.next()`
+  - PS if there are no more docus left (cursor is exhausted),
+    - a error is displayed
+    - which can be checked manually via e.g. `dataCursor.hasNext()`
 
 # Filter
 
