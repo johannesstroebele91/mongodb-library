@@ -89,3 +89,5 @@ These operators improve the capabilities to update documents and
 - `unset` drop a field based on a condition (value specified does NOT matter)
   - drops a field e.g. `db.users.updateMany({isSporty: true}, {$unset: {phone: ""}})`
   - write null into a field (better if used with schemas) e.g. `db.users.updateMany({isSporty: true}, {$set: {phone: null}})`
+- `rename` renaming a field
+  - e.g. `db.users.updateMany({}, {$rename: {age: "totalAge"}})`
