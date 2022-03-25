@@ -59,7 +59,12 @@ Update onr or all documents of a collection that match the filter
 
 # update Operators
 
-These operators improve the capabilities to update documents
+These operators improve the capabilities to update documents and
+
+- can be **combined**
+- e.g. `db.users.updateOne({name: "Manuel"}, {$inc: {age: 1}, $set: {name: "Peter}})`
+- but it is not possible to change the same field in the same command (leads to error)
+  The most important operators are:
 
 - `set` describes some fields that should be replaced or added to an existing document
   - update one field
@@ -71,3 +76,6 @@ These operators improve the capabilities to update documents
       - `db.users.updateMany({"hobbies.title": "Sports"}, {$set: {isSporty: true}})`
   - update many fields
     - e.g. `db.users.updateOne({_id: ObjectId("6239f80df1f853fe180b50cb")}, {$set: {age: 28, phone: 01528329712}})`
+- `inc` increment OR DECREMENT a value, mostly number, by a number (e.g. 1, -3)
+  - e.g. increment the age by one every year
+  - e.g. `db.users.updateOne({name: "Manuel"}, {$inc: {age: 1}})`
