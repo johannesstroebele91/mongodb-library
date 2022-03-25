@@ -4,7 +4,8 @@
 - [updateOne()](#updateone)
 - [updateMany()](#updatemany)
 - [replaceOne()](#replaceone)
-- [update](#update)
+- [update() (DEPRECATED)](#update-deprecated)
+- [update Operators](#update-operators)
 
 # Basic
 
@@ -15,13 +16,13 @@ Changing one or multiple documents
   - `db` access current database
   - `myCollection`access a collection (gets created if does not exists)
   - `updateOne(filter, data, options)` method that gets executed on the collection, which parameters:
-    - Filter: narrow down which documents to change
+    - Filter: narrow down which documents to change using e.g. query selectors `query-selectors.md`
     - Data: describing the change
     - Options: configuration
 
 # updateOne()
 
-Update one document
+Update the first document of a collection that matches the filter
 
 - syntax `db.products.updateOne(filter, data, options)`
 - Example: `db.products.updateOne({ _id: 1 }, { $set: { price: 899 } })`
@@ -32,26 +33,41 @@ Update one document
 
 # updateMany()
 
-Update one or multiple documents
+Update all documents of a collection that match the filter
 
 - syntax `db.products.updateMany(filter, data, options)`
 - e.g. `db.products.insertMany([ { "_id" : 1, "name" : "xPhone"}, { "_id" : 2, "name" : "xTablet"}, ]) `
 
 # replaceOne()
 
-Replace one document
+Replace one document of a collection that match the filter
 
 - syntax `db.products.replaceOne(filter, data, options)`
 - e.g. `db.restaurant.replaceOne( { "name" : "Pizza Peter" }, { "_id": 4, "name" : "Pizza Peter", "Borough" : "Manhattan"}, { upsert: true } );`
   - `$set` is not needed here
   - the new object completely replaces the existing object
 
-# update
+# update() (DEPRECATED)
 
-Update one or multiple documents
+Update onr or all documents of a collection that match the filter
 
 - syntax `db.products.update(filter, data, options)`
 - e.g. `db.products.update({ price: 29.99 }, { $set: { price: 19.99 } })`
   - `$set` is not needed here
   - the new object completely replaces the existing object
   - PS DEPRECATED with newer mongosh versions
+
+# update Operators
+
+These operators improve the capabilities to update documents
+
+- `set` describes some fields that should be replaced or added to an existing document
+  - update one field
+    - updateOne()
+      - e.g. overwrites if a hobbies array already existed
+      - `db.users.updateOne({_id: ObjectId("6239f80df1f853fe180b50cb")}, {$set: {hobbies: [{title: "Sports", frequency: 5}, {title: "Cooking", frequency: 3}, {title: "Hiking", frequency: 1}]}})`
+    - updateMany()
+      - e.g. all users that match a certain criteria should get a new field
+      - `db.users.updateMany({"hobbies.title": "Sports"}, {$set: {isSporty: true}})`
+  - update many fields
+    - e.g. `db.users.updateOne({_id: ObjectId("6239f80df1f853fe180b50cb")}, {$set: {age: 28, phone: 01528329712}})`
