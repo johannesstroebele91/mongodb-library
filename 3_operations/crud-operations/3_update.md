@@ -110,12 +110,19 @@ These operators improve the capabilities to update documents and
 
 # Update matched elements in an array
 
-If normally a element in an element would be updated,
-
-- it would be replaced
-- which can be avoided by
-  - refering to the element matched in the filter with `.$`
-    - and e.g. overwrite the element `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$": {title: "Sports", frequency: 2}}})` OR
-  - refering to the element matched in the filter and
-  - adding a new field using `.$.newFieldName`
-  - e.g. `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$.highFrequency": true}})`
+- `.$` enables to overwrite the first element in an array
+  - that matches the filter criteria
+  - e.g. `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$": {title: "Sports", frequency: 2}}})`
+- adding an element or elements to an array
+  - `array.$.newFieldName` enables to adding a new field
+    - to the first element in an array
+    - that matches the filter condition
+    - e.g. `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$.highFrequency": true}})`
+  - `array.$[].newFieldName` enables to adding a new field
+    - to the all element in an array
+    - that matches the filter condition
+    - e.g. `db.users.updateMany({age: {$gt: 30}}, {$inc: {"hobbies.$[].frequency": -1}})`
+- IMPORTANT:
+  - if not `.$` or `.$.newFieldName`
+  - the complete element ist replaced
+  - e.g. TODO add example
