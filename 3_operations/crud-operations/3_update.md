@@ -137,3 +137,6 @@ These operators improve the capabilities to update documents and
 - Removing elements from an array
   - `pull` enables to remove an specific element from an array
     - e.g. `db.users.updateOne({name: "Maria"}, {$pull: {hobbies: {title: "Hiking"}}}`
+  - `pop` enables two things
+    - value `1` removes the last element e.g. `db.users.updateOne({name: "Chris"}, {$pop: {hobbies: 1}})`
+    - value `-1` removes the first element e.g. `db.users.updateOne({name: "Chris"}, {$pop: {hobbies: 1}})`
