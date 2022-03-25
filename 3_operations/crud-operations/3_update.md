@@ -116,6 +116,9 @@ These operators improve the capabilities to update documents and
 - adding an element or elements to an array
   - `push` enables to push a new element onto an array
     - e.g. `db.users.updateOne({name: "Maria"}, {$push: {hobbies: {title: "Sports", frequency: 2}}})`
+  - `each` enables to push multiple elements onto an array
+    - which can be also e.g. sorted afterwards
+    - e.g. `db.users.updateOne({name: "Maria"}, {$push: {hobbies: {$each: [{title: "Good wine", frequency: 1}, {title: "Hiking", frequency: 2}], $sort: {frequency: -1}, $slice: 1}}})`
   - `array.$.newFieldName` enables to adding a new field
     - to the first element in an array
     - that matches the filter condition
@@ -131,7 +134,3 @@ These operators improve the capabilities to update documents and
     - by creating a variable e.g. `el` and
     - using int in the `arrayFilter` option
     - e.g. `db.users.updateMany({"hobbies.frequency": {$gt: 2}}, {$set: {"hobbies.$[el].goodFrequency": true}}, {arrayFilters: [{"el.frequency": {$gt: 2}}]})`
-- - IMPORTANT:
-  - if not `.$` or `.$.newFieldName` or `???`
-  - the complete element ist replaced
-  - e.g. TODO add example
