@@ -25,7 +25,7 @@ _For read the `findOne()` and `find()` methods exist:_
 
 ## findOne()
 
-Get the first matching document it finds
+Get only the first document that matches the criteria
 
 - syntax `db.myCollection.findOne(filter, options)`
 - e.g. `db.myCollection.findOne({ name: 1, contribs: 1 } )`
@@ -35,7 +35,7 @@ Get the first matching document it finds
 
 ## find()
 
-Get one or more documents
+Get all document that matches the criteria
 
 - syntax `db.myCollection.find(filter, options)`
 - e.g. `db.myCollection.find()`

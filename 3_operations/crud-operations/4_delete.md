@@ -4,6 +4,7 @@
 - [Methods](#methods)
   - [deleteOne()](#deleteone)
   - [deleteMany()](#deletemany)
+- [Filter argument](#filter-argument)
 
 # Basics
 
@@ -23,17 +24,27 @@ The delete methods are `deleteOne()` and `deleteMany()`
 
 ## deleteOne()
 
-Delete one document
+Delete only the first document that matches the criteria
 
 - syntax `db.products.deleteOne(filter, options)`
-- Example: `db.products.deleteOne({ _id: 1 })`
+- e.g. `db.products.deleteOne({ _id: 1 })`
+- e.g. `db.users.deleteOne({name: "Chris"})`
 
 ## deleteMany()
 
-Delete one or multiple documents
+Deletes all documents that match the criteria
 
 - syntax `db.products.deleteMany(filter, options)`
-- e.g. `db.products.deleteMany({ price: 19 })`
-  - deletes ALL documents that have the price 19€
-- e.g. `db.products.updateOne(filter, data, options)`
-  - deletes all documents due to empty filter `{}`
+- e.g. deletes ALL documents with price 19€ `db.products.deleteMany({ price: 19 })`
+- **deletes all documents** if the empty filter is empthy `{}`
+
+IMPORTANT:
+
+- if multiple criteria are specified
+- all must match
+- in order that the element is deleted
+- e.g. `db.users.deleteMany({age: {$exists: false, isSporty: true}})`
+
+# Filter argument
+
+_Is the same like for the explanation in the filter for the read methods_
