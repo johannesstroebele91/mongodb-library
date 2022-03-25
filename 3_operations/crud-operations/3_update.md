@@ -86,3 +86,6 @@ These operators improve the capabilities to update documents and
   - e.g. `db.users.updateOne({name: "Chris"}, {$max: {age: 38}})`
 - `mul` multiply the value with the value that is specified
   - e.g. `db.users.updateOne({name: "Chris"}, {$mul: {age: 1.3}})`
+- `unset` drop a field based on a condition (value specified does NOT matter)
+  - drops a field e.g. `db.users.updateMany({isSporty: true}, {$unset: {phone: ""}})`
+  - write null into a field (better if used with schemas) e.g. `db.users.updateMany({isSporty: true}, {$set: {phone: null}})`
