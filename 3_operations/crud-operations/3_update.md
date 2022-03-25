@@ -7,6 +7,7 @@
 - [update() (DEPRECATED)](#update-deprecated)
 - ["data" operators](#data-operators)
 - ["options" operators](#options-operators)
+- [Update matched elements in an array](#update-matched-elements-in-an-array)
 
 # Basic
 
@@ -20,6 +21,11 @@ Changing one or multiple documents
     - Filter: narrow down which documents to change using e.g. query selectors `query-selectors.md`
     - Data: describing the change
     - Options: configuration
+
+IMPORTANT:
+
+- before ruining data by specifying a wrong filter argument,
+- it is better test the filter using find() e.g. `db.myCollection.find({name: "Hannes"})`
 
 # updateOne()
 
@@ -37,7 +43,7 @@ Update the first document of a collection that matches the filter
 Update all documents of a collection that match the filter
 
 - syntax `db.products.updateMany(filter, data, options)`
-- e.g. `db.products.insertMany([ { "_id" : 1, "name" : "xPhone"}, { "_id" : 2, "name" : "xTablet"}, ]) `
+- e.g. `db.test.updateMany({foo: "bar"}, {$set: {test: "success!"}})`
 
 # replaceOne()
 
@@ -101,3 +107,15 @@ These operators improve the capabilities to update documents and
     - PS even the name is added from the filter
     - altough it is not specified in the data argument via $set
     - because MongoDB is smart
+
+# Update matched elements in an array
+
+If normally a element in an element would be updated,
+
+- it would be replaced
+- which can be avoided by
+  - refering to the element matched in the filter with `.$`
+    - and e.g. overwrite the element `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$": {title: "Sports", frequency: 2}}})` OR
+  - refering to the element matched in the filter and
+  - adding a new field using `.$.newFieldName`
+  - e.g. `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$.highFrequency": true}})`
