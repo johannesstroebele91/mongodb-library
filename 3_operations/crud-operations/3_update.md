@@ -114,6 +114,8 @@ These operators improve the capabilities to update documents and
   - that matches the filter criteria
   - e.g. `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$": {title: "Sports", frequency: 2}}})`
 - adding an element or elements to an array
+  - `push` enables to push a new element onto an array
+    - e.g. `db.users.updateOne({name: "Maria"}, {$push: {hobbies: {title: "Sports", frequency: 2}}})`
   - `array.$.newFieldName` enables to adding a new field
     - to the first element in an array
     - that matches the filter condition
@@ -127,7 +129,7 @@ These operators improve the capabilities to update documents and
     - to specific elements in an array
     - that match the filter condition
     - by creating a variable e.g. `el` and
-    - using int in the `arrayFilter` condition
+    - using int in the `arrayFilter` option
     - e.g. `db.users.updateMany({"hobbies.frequency": {$gt: 2}}, {$set: {"hobbies.$[el].goodFrequency": true}}, {arrayFilters: [{"el.frequency": {$gt: 2}}]})`
 - - IMPORTANT:
   - if not `.$` or `.$.newFieldName` or `???`
