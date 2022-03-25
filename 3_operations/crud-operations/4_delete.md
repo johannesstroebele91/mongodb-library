@@ -1,8 +1,9 @@
 **Table of Contents**
 
 - [Basics](#basics)
-- [deleteOne()](#deleteone)
-- [deleteMany()](#deletemany)
+- [Methods](#methods)
+  - [deleteOne()](#deleteone)
+  - [deleteMany()](#deletemany)
 
 # Basics
 
@@ -16,14 +17,18 @@ Delete one or multiple documents
     - Filter: narrow down which documents to change
     - Options: configuration
 
-# deleteOne()
+# Methods
+
+The delete methods are `deleteOne()` and `deleteMany()`
+
+## deleteOne()
 
 Delete one document
 
 - syntax `db.products.deleteOne(filter, options)`
 - Example: `db.products.deleteOne({ _id: 1 })`
 
-# deleteMany()
+## deleteMany()
 
 Delete one or multiple documents
 

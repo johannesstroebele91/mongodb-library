@@ -4,9 +4,8 @@
 - [Methods](#methods)
   - [findOne()](#findone)
   - [find()](#find)
-    - [basics](#basics)
     - [Cursors](#cursors)
-- [Filter](#filter)
+- [Filter argument](#filter-argument)
 
 # Basic
 
@@ -22,7 +21,7 @@ Get one or multiple documents
 
 # Methods
 
-_For read the findOne() and find() methods exist:_
+_For read the `findOne()` and `find()` methods exist:_
 
 ## findOne()
 
@@ -35,8 +34,6 @@ Get the first matching document it finds
 - access a single field: e.g. `db.movies.findOne().runtime` => Output: 60
 
 ## find()
-
-### basics
 
 Get one or more documents
 
@@ -108,7 +105,7 @@ In contrast the function `.toArray()`
   - e.g. `db.movies.find().sort({"rating.average": -1}).limit(2)`
   - PS MongoDB will automatically sort first, then skip, then limit (your order doesn't matter)
 
-# Filter
+# Filter argument
 
 _Both findOne() and find() methods support all filter possibilities:_
 

@@ -1,13 +1,15 @@
 **Table of Contents**
 
 - [Basic](#basic)
-- [updateOne()](#updateone)
-- [updateMany()](#updatemany)
-- [replaceOne()](#replaceone)
-- [update() (DEPRECATED)](#update-deprecated)
-- ["data" operators](#data-operators)
-- ["options" operators](#options-operators)
-- [Update matched elements in an array](#update-matched-elements-in-an-array)
+- [Methods](#methods)
+  - [updateOne()](#updateone)
+  - [updateMany()](#updatemany)
+  - [replaceOne()](#replaceone)
+  - [update() (DEPRECATED)](#update-deprecated)
+- [Update data using operators](#update-data-using-operators)
+  - [Update primitive data using update operators](#update-primitive-data-using-update-operators)
+  - [Update matched elements in an array using update operators](#update-matched-elements-in-an-array-using-update-operators)
+- [Argument "options"](#argument-options)
 
 # Basic
 
@@ -27,7 +29,11 @@ IMPORTANT:
 - before ruining data by specifying a wrong filter argument,
 - it is better test the filter using find() e.g. `db.myCollection.find({name: "Hannes"})`
 
-# updateOne()
+# Methods
+
+The delete methods are `updateOne()`, `updateMany()`, `replaceOne()` and `update() (DEPRECATED)`
+
+## updateOne()
 
 Update the first document of a collection that matches the filter
 
@@ -38,14 +44,14 @@ Update the first document of a collection that matches the filter
 - Example: `db.flightData.updateOne({_id: ObjectId("62334d4722f77f96878bcb85")}, {$set: {delayed: true}})`
   - using an ObjectId
 
-# updateMany()
+## updateMany()
 
 Update all documents of a collection that match the filter
 
 - syntax `db.products.updateMany(filter, data, options)`
 - e.g. `db.test.updateMany({foo: "bar"}, {$set: {test: "success!"}})`
 
-# replaceOne()
+## replaceOne()
 
 Replace one document of a collection that match the filter
 
@@ -54,7 +60,7 @@ Replace one document of a collection that match the filter
   - `$set` is not needed here
   - the new object completely replaces the existing object
 
-# update() (DEPRECATED)
+## update() (DEPRECATED)
 
 Update onr or all documents of a collection that match the filter
 
@@ -64,9 +70,11 @@ Update onr or all documents of a collection that match the filter
   - the new object completely replaces the existing object
   - PS DEPRECATED with newer mongosh versions
 
-# "data" operators
+# Update data using operators
 
-These operators improve the capabilities to update documents and
+## Update primitive data using update operators
+
+These operators enables to update fields:
 
 - can be **combined**
 - e.g. `db.users.updateOne({name: "Manuel"}, {$inc: {age: 1}, $set: {name: "Peter}})`
@@ -99,7 +107,13 @@ These operators improve the capabilities to update documents and
 - `rename` renaming a field
   - e.g. `db.users.updateMany({}, {$rename: {age: "totalAge"}})`
 
-# "options" operators
+## Update matched elements in an array using update operators
+
+Outsourced into `3_update_arrays.md`
+
+# Argument "options"
+
+These operators enable to change the options for an update method
 
 - `upsert` if the docu does not exist, it will be created `db.users.updateOne({}, {}, {upsert: true})`
   - the default is "false" and does not need to be stated in the options argument
@@ -107,40 +121,6 @@ These operators improve the capabilities to update documents and
     - PS even the name is added from the filter
     - altough it is not specified in the data argument via $set
     - because MongoDB is smart
-
-# Update matched elements in an array
-
-- `.$` enables to overwrite the first element in an array
-  - that matches the filter criteria
-  - e.g. `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$": {title: "Sports", frequency: 2}}})`
-- adding an element or elements to an array
-  - `push` enables to push a new element onto an array
-    - no matter if the element already exists
-    - e.g. `db.users.updateOne({name: "Maria"}, {$push: {hobbies: {title: "Sports", frequency: 2}}})`
-  - `addToSet` enables to push a new element onto an array,
-    - if the element is unique (does not already exist in the array)
-    - e.g. `db.users.updateOne({name: "Maria"}, {$addToSet: {hobbies: {title: "Hiking", frequency: 2}}})`
-  - `each` enables to push multiple elements onto an array
-    - which can be also e.g. sorted afterwards
-    - e.g. `db.users.updateOne({name: "Maria"}, {$push: {hobbies: {$each: [{title: "Good wine", frequency: 1}, {title: "Hiking", frequency: 2}], $sort: {frequency: -1}, $slice: 1}}})`
-  - `array.$.newFieldName` enables to adding a new field
-    - to the first element in an array
-    - that matches the filter condition
-    - e.g. `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$.highFrequency": true}})`
-  - `array.$[].newFieldName` enables to adding a new field
-    - to all elements in an array
-    - that matches the filter condition
-    - e.g. `db.users.updateMany({age: {$gt: 30}}, {$inc: {"hobbies.$[].frequency": -1}})`
-  - `array.$[el].newFieldName /// arrayFilters: [{el: "someValue"}]`
-    - enables to adding a new field
-    - to specific elements in an array
-    - that match the filter condition
-    - by creating a variable e.g. `el` and
-    - using int in the `arrayFilter` option
-    - e.g. `db.users.updateMany({"hobbies.frequency": {$gt: 2}}, {$set: {"hobbies.$[el].goodFrequency": true}}, {arrayFilters: [{"el.frequency": {$gt: 2}}]})`
-- Removing elements from an array
-  - `pull` enables to remove an specific element from an array
-    - e.g. `db.users.updateOne({name: "Maria"}, {$pull: {hobbies: {title: "Hiking"}}}`
-  - `pop` enables two things
-    - value `1` removes the last element e.g. `db.users.updateOne({name: "Chris"}, {$pop: {hobbies: 1}})`
-    - value `-1` removes the first element e.g. `db.users.updateOne({name: "Chris"}, {$pop: {hobbies: 1}})`
+- `arrayFilters`: enables to use a variable created in the data argument
+  - to e.g. add an element to an array
+  - like described in the `Update matched elements in an array` section

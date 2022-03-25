@@ -2,7 +2,7 @@
 
 - [Basic](#basic)
 - [Important](#important)
-- [Operations](#operations)
+- [Methods](#methods)
   - [insertOne()](#insertone)
   - [insertMany()](#insertmany)
   - [insert()](#insert)
@@ -41,9 +41,9 @@ If multiple data is inserted
   - PS an id key need to be always named like this `_id`
   - PS prevents multiple objects with the same id
 
-# Operations
+# Methods
 
-_The most important create operations are insertOne(), insertMany(), and insert()_
+_The most important create operations are `insertOne()`, `insertMany()`, and `insert()`_
 
 ## insertOne()
 
