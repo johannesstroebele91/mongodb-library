@@ -119,10 +119,17 @@ These operators improve the capabilities to update documents and
     - that matches the filter condition
     - e.g. `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$.highFrequency": true}})`
   - `array.$[].newFieldName` enables to adding a new field
-    - to the all element in an array
+    - to all elements in an array
     - that matches the filter condition
     - e.g. `db.users.updateMany({age: {$gt: 30}}, {$inc: {"hobbies.$[].frequency": -1}})`
-- IMPORTANT:
-  - if not `.$` or `.$.newFieldName`
+  - `array.$[el].newFieldName /// arrayFilters: [{el: "someValue"}]`
+    - enables to adding a new field
+    - to specific elements in an array
+    - that match the filter condition
+    - by creating a variable e.g. `el` and
+    - using int in the `arrayFilter` condition
+    - e.g. `db.users.updateMany({"hobbies.frequency": {$gt: 2}}, {$set: {"hobbies.$[el].goodFrequency": true}}, {arrayFilters: [{"el.frequency": {$gt: 2}}]})`
+- - IMPORTANT:
+  - if not `.$` or `.$.newFieldName` or `???`
   - the complete element ist replaced
   - e.g. TODO add example
