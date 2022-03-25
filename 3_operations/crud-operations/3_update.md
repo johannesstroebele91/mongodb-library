@@ -5,7 +5,8 @@
 - [updateMany()](#updatemany)
 - [replaceOne()](#replaceone)
 - [update() (DEPRECATED)](#update-deprecated)
-- [update Operators](#update-operators)
+- ["data" operators](#data-operators)
+- ["options" operators](#options-operators)
 
 # Basic
 
@@ -57,7 +58,7 @@ Update onr or all documents of a collection that match the filter
   - the new object completely replaces the existing object
   - PS DEPRECATED with newer mongosh versions
 
-# update Operators
+# "data" operators
 
 These operators improve the capabilities to update documents and
 
@@ -91,3 +92,12 @@ These operators improve the capabilities to update documents and
   - write null into a field (better if used with schemas) e.g. `db.users.updateMany({isSporty: true}, {$set: {phone: null}})`
 - `rename` renaming a field
   - e.g. `db.users.updateMany({}, {$rename: {age: "totalAge"}})`
+
+# "options" operators
+
+- `upsert` if the docu does not exist, it will be created `db.users.updateOne({}, {}, {upsert: true})`
+  - the default is "false" and does not need to be stated in the options argument
+  - e.g. `db.users.updateOne({name: "Maria"}, {$set: {age: 29, hobbies: [{title: "Good food", frequency: 3}], isSporty: true}}, {upsert: true})`
+    - PS even the name is added from the filter
+    - altough it is not specified in the data argument via $set
+    - because MongoDB is smart
