@@ -79,3 +79,10 @@ These operators improve the capabilities to update documents and
 - `inc` increment OR DECREMENT a value, mostly number, by a number (e.g. 1, -3)
   - e.g. increment the age by one every year
   - e.g. `db.users.updateOne({name: "Manuel"}, {$inc: {age: 1}})`
+- `min` updates if the old value is higher than the specified value
+  - e.g. age is a minimum of 35, so all lower age entries will be raised to 35
+  - `db.users.updateOne({name: "Chris"}, {$min: {age: 32}})`
+- `max` updates if the old value is lower than the specified value
+  - e.g. `db.users.updateOne({name: "Chris"}, {$max: {age: 38}})`
+- `mul` multiply the value with the value that is specified
+  - e.g. `db.users.updateOne({name: "Chris"}, {$mul: {age: 1.3}})`
