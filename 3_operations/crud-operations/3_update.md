@@ -134,3 +134,6 @@ These operators improve the capabilities to update documents and
     - by creating a variable e.g. `el` and
     - using int in the `arrayFilter` option
     - e.g. `db.users.updateMany({"hobbies.frequency": {$gt: 2}}, {$set: {"hobbies.$[el].goodFrequency": true}}, {arrayFilters: [{"el.frequency": {$gt: 2}}]})`
+- Removing elements from an array
+  - `pull` enables to remove an specific element from an array
+    - e.g. `db.users.updateOne({name: "Maria"}, {$pull: {hobbies: {title: "Hiking"}}}`
