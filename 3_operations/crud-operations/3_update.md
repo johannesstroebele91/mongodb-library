@@ -115,7 +115,11 @@ These operators improve the capabilities to update documents and
   - e.g. `db.users.updateMany({hobbies: {$elemMatch: {title: "Sports", frequency: {$gte: 4}}}}, {$set: {"hobbies.$": {title: "Sports", frequency: 2}}})`
 - adding an element or elements to an array
   - `push` enables to push a new element onto an array
+    - no matter if the element already exists
     - e.g. `db.users.updateOne({name: "Maria"}, {$push: {hobbies: {title: "Sports", frequency: 2}}})`
+  - `addToSet` enables to push a new element onto an array,
+    - if the element is unique (does not already exist in the array)
+    - e.g. `db.users.updateOne({name: "Maria"}, {$addToSet: {hobbies: {title: "Hiking", frequency: 2}}})`
   - `each` enables to push multiple elements onto an array
     - which can be also e.g. sorted afterwards
     - e.g. `db.users.updateOne({name: "Maria"}, {$push: {hobbies: {$each: [{title: "Good wine", frequency: 1}, {title: "Hiking", frequency: 2}], $sort: {frequency: -1}, $slice: 1}}})`
