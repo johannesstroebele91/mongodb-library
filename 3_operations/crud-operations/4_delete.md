@@ -36,7 +36,11 @@ Deletes all documents that match the criteria
 
 - syntax `db.products.deleteMany(filter, options)`
 - e.g. deletes ALL documents with price 19€ `db.products.deleteMany({ price: 19 })`
-- **deletes all documents** if the empty filter is empthy `{}`
+
+**All documents can be deleted by**
+
+- passing an empthy filter `{}` e.g. `db.users.updateMany({})` OR
+- dropping the collection e.g. `db.users.drop()`
 
 IMPORTANT:
 
