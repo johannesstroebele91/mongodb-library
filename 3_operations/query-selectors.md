@@ -67,6 +67,7 @@ Documents can be found using these query selectors:
   - to access the value of the key-value pairs `"$someKey"` is needed
   - e.g. `db.sales.find({$expr: {$gt: [{$cond: {if: {$gte: ["$volume", 190]}, then: 190}}]}})`
   - e.g. `db.sales.find({$expr: {$gt: [{$cond: {if: {$gte: ["$volume", 190]}, then: {$subtract: ["$volume", 10]}, else: "$volume"}}]}})`
+  - SHORT FORM: e.g. `db.sales.find({name: /60795a5eb9d2aa55101a4006/})`
 
 ## array
 

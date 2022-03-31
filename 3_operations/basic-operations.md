@@ -13,6 +13,18 @@ The most important basic commands are:
   - the name of the collection
 - Clear the command line using `cls`
 
+# Get detailed information about an executed operation
+
+Get information about the operation
+
+- e.g. which search method was used `db.someCollection.explain().find()`
+- `explain()` works for find, update, delete
+- BUT not for insert
+
+Arguments can be passed to `explain()`
+
+- `explain("executionStats")` shows how fast the operation was
+
 # Get help
 
 Help for the command information can be accessed by
