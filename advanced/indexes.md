@@ -1,9 +1,26 @@
 # Basics
 
-Indexes enable to
+An index of a collection enables to
 
 - retrieve data more efficiently
 - if done correctly
+
+An index can be thought of as an
+
+- simple list of values + pointers
+- to the original document
+- e.g. `(29, "address in memory/ collection a1")`
+  - The documents in the collection would be at the "addresses" a1, a2 and a3
+  - The order does not have to match the order in the index (and most likely, it indeed won't).
+
+The important thing is that the index items are **ordered**
+
+- depending on how you created the index
+- e.g. `createIndex({age: 1})`
+  - value `1`: ascending
+  - value `-1`: descending
+
+Additionally `sort()` is also sped up (of course only for numbers).
 
 # Example
 
@@ -36,3 +53,21 @@ Indexes lead to a lower performance
 - all indexes need to be adjusted
 - because the new value needs to be added and
 - the list sorted
+
+# How to Create an Index
+
+Use the `createIndex()`
+
+- by passing the respective field
+- as an paremeter
+- e.g. `db.contacts.createIndex({"dob.age": 1})`
+  - value `1`: ascending
+  - value `-1`: descending
+
+# Measure the performance advantage
+
+The performance of the operation
+
+- which uses an index
+- can be measuered by
+- `db.someCollection.explain("executionStats").find()`

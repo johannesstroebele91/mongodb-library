@@ -17,7 +17,7 @@ The most important basic commands are:
 
 Get information about the operation
 
-- e.g. which search method was used `db.someCollection.explain().find()`
+- e.g. which search method was used `db.someCollection.explain().find()` (IXSCAN vs COLLSCAN)
 - `explain()` works for find, update, delete
 - BUT not for insert
 
