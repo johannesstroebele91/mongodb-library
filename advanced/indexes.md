@@ -6,6 +6,9 @@
 - [4. Usage](#4-usage)
   - [4.1. How to Create an Index](#41-how-to-create-an-index)
   - [4.2. How to Delete an Index](#42-how-to-delete-an-index)
+- [5. Kinds of indexes](#5-kinds-of-indexes)
+- [5.1. Index for one field](#51-index-for-one-field)
+  - [5.2. Index for multiple fields (Compound Index)](#52-index-for-multiple-fields-compound-index)
 
 # 1.Basics
 
@@ -107,3 +110,29 @@ Use the `deleteIndex()`
 - e.g. `db.contacts.createIndex({"dob.age": 1})`
   - value `1`: ascending
   - value `-1`: descending
+
+# 5. Kinds of indexes
+
+# 5.1. Index for one field
+
+Example:
+
+- creating an index `db.contacts.createIndex({"dob.age": 1})`
+- using the index `db.contacts.find({"dob.age": {$gt: 60}})`
+
+## 5.2. Index for multiple fields (Compound Index)
+
+Each entry in the index is
+
+- NOT a single value
+- BUT tow combined ones
+- SO the order of the fields is
+- EXTREMELY important
+- e.g. Find all persons who are 35 and male
+  1. create an index `db.contacts.createIndex({"dob.age": 1, gender: 1})`
+  2. make the query `db.contacts.explain().find({"dob.age": 35, gender: "male"})`
+     - PS the order of the passed parameters does NOT matter!!!
+     - PS the order of `createIndex()` does matter cause the index can be used to find
+       - either age and gender (IXSCAN) OR
+       - just age (IXSCAN)
+       - BUT not only the right field (does the COLLSCAN)
