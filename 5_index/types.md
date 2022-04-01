@@ -81,12 +81,20 @@ HOWEVER, combinding an index for an array
 - whereby `is`, `a`, `to`,
   - or other similar smaller words
   - are NOT stored
-- The targeted key e.g. description
-  - does not need to be added
-  - because only one text index
-  - per collection is possible
-  - due to the high performance cost
-  - e.g. `db.products.find({$text: {$search: "awesome"}})`
+
+**ONLY ONE text index per collection is possible**
+
+- because of the high performance cost
+- therefore the targeted key e.g. description
+- does not need to be added
+- e.g. `db.products.find({$text: {$search: "awesome"}})`
+- HOWEVER, two text indexes can be merged by
+  1. firstly deleting the text index if it exists by
+     - finding out the name of the index `db.someCollection.getIndexes()`AND
+     - dropping it via like this e.g. `db.products.dropIndex("description_text")`
+  2. Merging multiple text fields
+     - which creates one index with all the words from both fields
+     - e.g. `db.products.createIndex({title: "text", description: "text"})`
 
 A text index can be created by
 
@@ -98,7 +106,7 @@ An value in an text index can be searched by
 - using the keywords `{$text: {$search: "someWord"}}`
 - e.g. `db.products.find({$text: {$search: "awesome"}})`
 
-Important:
+**Important**
 
 - Casing is not important
 - Multiple words can be searched by writing them one after another `db.products.find({$text: {$search: "awesome red"}})`
