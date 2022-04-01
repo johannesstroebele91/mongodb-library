@@ -12,6 +12,7 @@
 - [5. Kinds of indexes](#5-kinds-of-indexes)
 - [5.1. Index for one field](#51-index-for-one-field)
   - [5.2. Index for multiple fields (Compound Index)](#52-index-for-multiple-fields-compound-index)
+  - [5.3. Index for self-destroying data (TTL Index)](#53-index-for-self-destroying-data-ttl-index)
 
 # 1.Basics
 
@@ -184,3 +185,13 @@ Each entry in the index is
        - either age and gender (IXSCAN) OR
        - just age (IXSCAN)
        - BUT not only the right field (does the COLLSCAN)
+
+## 5.3. Index for self-destroying data (TTL Index)
+
+Time to live index is for
+
+- data that destroys itself
+- after a predefined time
+- e.g. clear session of users or shopping cart
+- `db.sessions.createIndex({createdAt: 1}, {expireAfterSeconds: 10})`
+- PS deletes only data if new data is added or changed
