@@ -8,6 +8,7 @@
   - [4.2. Delete an Index](#42-delete-an-index)
   - [4.3. Get all existing indexes](#43-get-all-existing-indexes)
   - [4.4. Add own unique index](#44-add-own-unique-index)
+  - [4.5. Partial filters](#45-partial-filters)
 - [5. Kinds of indexes](#5-kinds-of-indexes)
 - [5.1. Index for one field](#51-index-for-one-field)
   - [5.2. Index for multiple fields (Compound Index)](#52-index-for-multiple-fields-compound-index)
@@ -137,6 +138,17 @@ Indexes can be configured
 - e.g. `db.contacts.createIndex({email: 1, {unique: true}})`
   - which checks if the values are unique
   - which are a must
+
+## 4.5. Partial filters
+
+Partial filters provide a solution to the
+
+- problem that many values in index exist
+- that you most of the times don't need
+- e.g. always only need people that are over 65 for a retirement application
+  - create index `db.contacts.createIndex({"dob.age": 1}, {partialFilterExpression: {gender: "male"}})`
+  - get data does NOT work!!!!! `db.contacts.find({"dob.age": {$gt: 60}})`
+  - get data `db.contacts.find({"dob.age": {$gt: 60}, gender: "male"})`
 
 # 5. Kinds of indexes
 
