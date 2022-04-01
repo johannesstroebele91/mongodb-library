@@ -1,6 +1,7 @@
 **Table of Contents**
 
 - [1.Basics](#1basics)
+- [2. Use cases](#2-use-cases)
 - [2. Explanation](#2-explanation)
 - [3. Example](#3-example)
 - [4. Usage](#4-usage)
@@ -20,6 +21,8 @@ Indexes enable to
   - numbers: e.g. age, salary, height
   - strings: e.g. names, addresses
   - booleans: should NOT be use because it does not speed of the query
+
+# 2. Use cases
 
 Don't use indexes if you have queries that
 
@@ -48,10 +51,19 @@ Use indexes if `sort()` function leads to an timeout
 - due to it taking to long
 - e.g. `db.contacts.explain().find({"dob.age": 35}).sort({gender: 1})`
 
-The default index `_id`
+Use the default index `_id` sort documents by the **stanard order**
 
-- should be used to sort documents
-- by the stanard order
+If you only need the value of an index
+
+- you can directly use the value
+- without having to examine any documents
+- which is called a **covered query**
+- An index covers a query when all of the following apply:
+  - all the fields in the query are part of an index, and
+  - all the fields returned in the results are in the same index.
+  - no fields in the query are equal to null (i.e. {"field" : null} or {"field" : {$eq : null}} ).
+- e.g. `db.customers.find({name: "Max"}, {_id: 0, name: 1})`
+  - this query is not covered!!! e.g. `db.customers.find({name: "Max"})`
 
 # 2. Explanation
 
