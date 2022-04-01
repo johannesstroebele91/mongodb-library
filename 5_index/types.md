@@ -121,3 +121,9 @@ An value in an text index can be searched by
 - Exclude words by
   - putting `-` before each word that should be excluded
   - e.g. `db.products.find({$text: {$search: "awesome -t-shirt"}})`
+- Defining which stop words and prefixed are removed from the list of words by
+  - setting the default language
+  - which is by default english
+  - e.g.
+  - list with languages: https://www.mongodb.com/docs/manual/tutorial/specify-language-for-text-index/
+- Using weights
