@@ -4,8 +4,9 @@
 - [2. Explanation](#2-explanation)
 - [3. Example](#3-example)
 - [4. Usage](#4-usage)
-  - [4.1. How to Create an Index](#41-how-to-create-an-index)
-  - [4.2. How to Delete an Index](#42-how-to-delete-an-index)
+  - [4.1. Create an Index](#41-create-an-index)
+  - [4.2. Delete an Index](#42-delete-an-index)
+  - [4.3. Get all existing indexes](#43-get-all-existing-indexes)
 - [5. Kinds of indexes](#5-kinds-of-indexes)
 - [5.1. Index for one field](#51-index-for-one-field)
   - [5.2. Index for multiple fields (Compound Index)](#52-index-for-multiple-fields-compound-index)
@@ -43,16 +44,15 @@ Don't use indexes for each field of a collection
 - because the new value needs to be added and
 - the list sorted
 
-Use indexes if `sort()` timesout
+Use indexes if `sort()` function leads to an timeout
 
 - due to it taking to long
 - e.g. `db.contacts.explain().find({"dob.age": 35}).sort({gender: 1})`
 
-The performance of the operation
+The default index `_id`
 
-- e.g. operation with an without an index
-- can be measuered by
-- `db.someCollection.explain("executionStats").find()`
+- should be used to sort documents
+- by the stanard order
 
 # 2. Explanation
 
@@ -70,6 +70,12 @@ The important thing is that the index items are **ordered**
 - e.g. `createIndex({age: 1})`
   - value `1`: ascending
   - value `-1`: descending
+
+The performance of the operation
+
+- e.g. operation with an without an index
+- can be measuered by
+- `db.someCollection.explain("executionStats").find()`
 
 # 3. Example
 
@@ -94,7 +100,7 @@ If there is an index
 
 # 4. Usage
 
-## 4.1. How to Create an Index
+## 4.1. Create an Index
 
 Use the `createIndex()`
 
@@ -104,7 +110,7 @@ Use the `createIndex()`
   - value `1`: ascending
   - value `-1`: descending
 
-## 4.2. How to Delete an Index
+## 4.2. Delete an Index
 
 Use the `deleteIndex()`
 
@@ -113,6 +119,13 @@ Use the `deleteIndex()`
 - e.g. `db.contacts.createIndex({"dob.age": 1})`
   - value `1`: ascending
   - value `-1`: descending
+
+## 4.3. Get all existing indexes
+
+All existing indexes can be seen using
+
+- `db.myCollection.getIndexes()`
+- whereby the default index is `_id`
 
 # 5. Kinds of indexes
 
