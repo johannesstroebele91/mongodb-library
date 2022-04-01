@@ -43,6 +43,11 @@ Don't use indexes for each field of a collection
 - because the new value needs to be added and
 - the list sorted
 
+Use indexes if `sort()` timesout
+
+- due to it taking to long
+- e.g. `db.contacts.explain().find({"dob.age": 35}).sort({gender: 1})`
+
 The performance of the operation
 
 - e.g. operation with an without an index
@@ -65,8 +70,6 @@ The important thing is that the index items are **ordered**
 - e.g. `createIndex({age: 1})`
   - value `1`: ascending
   - value `-1`: descending
-
-Good to know: the `sort()` function is also sped up
 
 # 3. Example
 
