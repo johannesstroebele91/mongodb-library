@@ -18,7 +18,7 @@ Create inserts
 - e.g. `db.myCollection.insertOne(data, options)`
   - `db` access current database
   - `myCollection`access a collection (gets created if does not exists)
-  - `insertOne(data, options)` method that gets executed on the collection, which parameters:
+  - `insertOne(data, options)` method that gets executed on the collection, with parameters:
     - data: object that should be created written as a key-value pair
     - options: configuration
 

@@ -19,7 +19,7 @@ Changing one or multiple documents
 - e.g. `db.myCollection.updateOne(filter, data, options)`
   - `db` access current database
   - `myCollection`access a collection (gets created if does not exists)
-  - `updateOne(filter, data, options)` method that gets executed on the collection, which parameters:
+  - `updateOne(filter, data, options)` method that gets executed on the collection, with parameters:
     - Filter: narrow down which documents to change using e.g. query selectors `query-selectors.md`
     - Data: describing the change
     - Options: configuration

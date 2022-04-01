@@ -14,7 +14,7 @@ Delete one or multiple documents
 - e.g. `db.myCollection.deleteOne(filter, options)`
   - `db` access current database
   - `myCollection`access a collection (gets created if does not exists)
-  - `deleteOne(filter, options)` method that gets executed on the collection, which parameters:
+  - `deleteOne(filter, options)` method that gets executed on the collection, with parameters:
     - Filter: narrow down which documents to change
     - Options: configuration
 
