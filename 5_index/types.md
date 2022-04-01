@@ -78,7 +78,15 @@ HOWEVER, combinding an index for an array
 - which turns a text
 - into array of single words
 - and stores it essentially like an array
-- PS `is`, `a`, `to`, or other similar smaller words are NOT stored
+- whereby `is`, `a`, `to`,
+  - or other similar smaller words
+  - are NOT stored
+- The targeted key e.g. description
+  - does not need to be added
+  - because only one text index
+  - per collection is possible
+  - due to the high performance cost
+  - e.g. `db.products.find({$text: {$search: "awesome"}})`
 
 A text index can be created by
 
@@ -97,10 +105,8 @@ Important:
 - Specific phrases can be search by
   - escaping the `""` using `"\"firstWord secondWord\""`
   - e.g. `db.products.find({$text: {$search: "\"red book\""}})`
-- A targeted key e.g. description
-  - does not need to be added
-  - because only one text index
-  - per collection is possible
-  - due to the high performance cost
-  - e.g. `db.products.find({$text: {$search: "awesome"}})`
--
+- Get the result first for the hits that where more words match by
+  - adding a text score via the options `{score: {$meta: "textScore"}`
+  - which also sorts the results by the highest score automatically
+  - e.g. `db.products.find({$text: {$search: "awesome t-shirt"}}, {score: {$meta: "textScore"}})`
+  - sorting can also enforced (not necessary) `db.products.find({$text: {$search: "awesome t-shirt"}}, {score: {$meta: "textScore"}}).sort({score: {$meta: "textScore"}})`
