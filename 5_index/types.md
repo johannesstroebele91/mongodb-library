@@ -118,3 +118,6 @@ An value in an text index can be searched by
   - which also sorts the results by the highest score automatically
   - e.g. `db.products.find({$text: {$search: "awesome t-shirt"}}, {score: {$meta: "textScore"}})`
   - sorting can also enforced (not necessary) `db.products.find({$text: {$search: "awesome t-shirt"}}, {score: {$meta: "textScore"}}).sort({score: {$meta: "textScore"}})`
+- Exclude words by
+  - putting `-` before each word that should be excluded
+  - e.g. `db.products.find({$text: {$search: "awesome -t-shirt"}})`
