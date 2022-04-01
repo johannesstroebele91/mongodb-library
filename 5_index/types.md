@@ -1,6 +1,8 @@
 **Table of Contents**
 
 - [1. Index for one field](#1-index-for-one-field)
+- [2. Unique index](#2-unique-index)
+- [8. Partial indexes](#8-partial-indexes)
 - [2. Index for multiple fields (Compound Index)](#2-index-for-multiple-fields-compound-index)
 - [3. Index for self-destroying data (TTL Index)](#3-index-for-self-destroying-data-ttl-index)
 - [4. Index for an array (Multi Key Index)](#4-index-for-an-array-multi-key-index)
@@ -12,6 +14,36 @@ Example:
 
 - creating an index `db.contacts.createIndex({"dob.age": 1})`
 - using the index `db.contacts.find({"dob.age": {$gt: 60}})`
+
+# 2. Unique index
+
+Indexes can be configured
+
+- using the second parameter
+- for e.g. adding an own unique indexes e.g. email
+- e.g. `db.contacts.createIndex({email: 1, {unique: true}})`
+  - which checks if the values are unique
+  - which are a must
+
+MongoDB treats non-existing values
+
+- still as values in an index
+- so cannot insert two documents with no value
+- that belong to the unique index
+- PS if you want to create such an index, you need to set a `partialFilterExpression`
+  - e.g. `db.users.createIndex({email: 1}, {unique: true, partialFilterExpression: {email: {$exists: true}}})`
+  - so all of the not existing values are sorted out in advance
+
+# 8. Partial indexes
+
+Partial filters provide a solution to the
+
+- problem that many values in index exist
+- that you most of the times don't need
+- e.g. always only need people that are over 65 for a retirement application
+  - create index `db.contacts.createIndex({"dob.age": 1}, {partialFilterExpression: {gender: "male"}})`
+  - get data does NOT work!!!!! `db.contacts.find({"dob.age": {$gt: 60}})`
+  - get data `db.contacts.find({"dob.age": {$gt: 60}, gender: "male"})`
 
 # 2. Index for multiple fields (Compound Index)
 

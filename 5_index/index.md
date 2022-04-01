@@ -7,8 +7,6 @@
 - [4. Create an Index](#4-create-an-index)
 - [5. Delete an Index](#5-delete-an-index)
 - [6. Get all existing indexes](#6-get-all-existing-indexes)
-- [7. Add own unique index](#7-add-own-unique-index)
-- [8. Create partial filters](#8-create-partial-filters)
 
 # 1.Basics
 
@@ -160,33 +158,3 @@ All existing indexes can be seen using
 
 - `db.myCollection.getIndexes()`
 - whereby the default index is `_id`
-
-# 7. Add own unique index
-
-Indexes can be configured
-
-- using the second parameter
-- for e.g. adding an own unique indexes e.g. email
-- e.g. `db.contacts.createIndex({email: 1, {unique: true}})`
-  - which checks if the values are unique
-  - which are a must
-
-MongoDB treats non-existing values
-
-- still as values in an index
-- so cannot insert two documents with no value
-- that belong to the unique index
-- PS if you want to create such an index, you need to set a `partialFilterExpression`
-  - e.g. `db.users.createIndex({email: 1}, {unique: true, partialFilterExpression: {email: {$exists: true}}})`
-  - so all of the not existing values are sorted out in advance
-
-# 8. Create partial filters
-
-Partial filters provide a solution to the
-
-- problem that many values in index exist
-- that you most of the times don't need
-- e.g. always only need people that are over 65 for a retirement application
-  - create index `db.contacts.createIndex({"dob.age": 1}, {partialFilterExpression: {gender: "male"}})`
-  - get data does NOT work!!!!! `db.contacts.find({"dob.age": {$gt: 60}})`
-  - get data `db.contacts.find({"dob.age": {$gt: 60}, gender: "male"})`
