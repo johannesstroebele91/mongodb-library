@@ -1,3 +1,11 @@
+**Table of Contents**
+
+- [1. Index for one field](#1-index-for-one-field)
+- [2. Index for multiple fields (Compound Index)](#2-index-for-multiple-fields-compound-index)
+- [3. Index for self-destroying data (TTL Index)](#3-index-for-self-destroying-data-ttl-index)
+- [4. Index for an array (Multi Key Index)](#4-index-for-an-array-multi-key-index)
+- [5. Text index](#5-text-index)
+
 # 1. Index for one field
 
 Example:
@@ -61,3 +69,38 @@ HOWEVER, combinding an index for an array
 - because MongoDB would have to make
   - a catesian product, so all possible combinations
   - which would be super performance intensive
+
+# 5. Text index
+
+**Text index** is a
+
+- special Multi Key Index
+- which turns a text
+- into array of single words
+- and stores it essentially like an array
+- PS `is`, `a`, `to`, or other similar smaller words are NOT stored
+
+A text index can be created by
+
+- assigning the value `"text"` to the targeted key
+- `db.someCollection.createIndex({someText: "text"})`
+
+An value in an text index can be searched by
+
+- using the keywords `{$text: {$search: "someWord"}}`
+- e.g. `db.products.find({$text: {$search: "awesome"}})`
+
+Important:
+
+- Casing is not important
+- Multiple words can be searched by writing them one after another `db.products.find({$text: {$search: "awesome red"}})`
+- Specific phrases can be search by
+  - escaping the `""` using `"\"firstWord secondWord\""`
+  - e.g. `db.products.find({$text: {$search: "\"red book\""}})`
+- A targeted key e.g. description
+  - does not need to be added
+  - because only one text index
+  - per collection is possible
+  - due to the high performance cost
+  - e.g. `db.products.find({$text: {$search: "awesome"}})`
+-
