@@ -7,6 +7,7 @@
   - [4.1. Create an Index](#41-create-an-index)
   - [4.2. Delete an Index](#42-delete-an-index)
   - [4.3. Get all existing indexes](#43-get-all-existing-indexes)
+  - [4.4. Add own unique index](#44-add-own-unique-index)
 - [5. Kinds of indexes](#5-kinds-of-indexes)
 - [5.1. Index for one field](#51-index-for-one-field)
   - [5.2. Index for multiple fields (Compound Index)](#52-index-for-multiple-fields-compound-index)
@@ -126,6 +127,16 @@ All existing indexes can be seen using
 
 - `db.myCollection.getIndexes()`
 - whereby the default index is `_id`
+
+## 4.4. Add own unique index
+
+Indexes can be configured
+
+- using the second parameter
+- for e.g. adding an own unique indexes e.g. email
+- e.g. `db.contacts.createIndex({email: 1, {unique: true}})`
+  - which checks if the values are unique
+  - which are a must
 
 # 5. Kinds of indexes
 
