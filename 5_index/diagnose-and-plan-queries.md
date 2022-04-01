@@ -30,3 +30,21 @@ Get information about an executed operation
    - should be as close as possible
    - TO the **number of documents returned**
    - OR the number should be `0`
+
+# How MongoDB selects a winning plan
+
+MongoDB let's
+
+- `plans` compete against each other
+- such as multiple IXSCANs or COLLSCAN
+- by measuring how they perform
+- for a number of the documents
+
+MongoDB cashes the winning plan
+
+- so it does not waste performance
+- which gets reevaluated when
+  - write treshold is reached (currently 1.000)
+  - index is rebuilt
+  - other indexes are added or deleted
+  - MongoDB server is restarted
