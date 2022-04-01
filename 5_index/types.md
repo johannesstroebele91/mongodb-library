@@ -95,6 +95,13 @@ HOWEVER, combinding an index for an array
   2. Merging multiple text fields
      - which creates one index with all the words from both fields
      - e.g. `db.products.createIndex({title: "text", description: "text"})`
+     - Different weights relative to each othe
+       - can be assigned for each field
+       - using options `weights: {someField: 1, anotherField: 3}`
+         1. create an index using weights
+            - e.g. description is 10 times more important than description
+            - `db.products.createIndex({title: "text", description: "text"}, {weights: {title: 1, description: 10}})`
+         2. find a document using weights `db.products.find({$text: {$search: "red"}}, {score: {$meta: "textScore"}})`
 
 A text index can be created by
 
@@ -108,7 +115,9 @@ An value in an text index can be searched by
 
 **Important**
 
-- Casing is not important
+- Casing is by default false
+  - but can be set to true
+  - e.g. `db.products.find({$text: {$search: "red", $caseSensitive: true}})`
 - Multiple words can be searched by writing them one after another `db.products.find({$text: {$search: "awesome red"}})`
 - Specific phrases can be search by
   - escaping the `""` using `"\"firstWord secondWord\""`
@@ -124,6 +133,5 @@ An value in an text index can be searched by
 - Defining which stop words and prefixed are removed from the list of words by
   - setting the default language
   - which is by default english
-  - e.g.
+  - e.g. `db.products.createIndex({title: "text", description: "text"}, {default_language: "english"})`
   - list with languages: https://www.mongodb.com/docs/manual/tutorial/specify-language-for-text-index/
-- Using weights
