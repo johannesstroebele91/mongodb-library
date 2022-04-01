@@ -3,13 +3,12 @@
 - [1.Basics](#1basics)
 - [2. Use cases](#2-use-cases)
 - [2. Explanation](#2-explanation)
-- [3. Example](#3-example)
-- [4. Usage](#4-usage)
-  - [4.1. Create an Index](#41-create-an-index)
-  - [4.2. Delete an Index](#42-delete-an-index)
-  - [4.3. Get all existing indexes](#43-get-all-existing-indexes)
-  - [4.4. Add own unique index](#44-add-own-unique-index)
-  - [4.5. Partial filters](#45-partial-filters)
+- [3. Find docus with an index](#3-find-docus-with-an-index)
+- [4. Create an Index](#4-create-an-index)
+- [5. Delete an Index](#5-delete-an-index)
+- [6. Get all existing indexes](#6-get-all-existing-indexes)
+- [7. Add own unique index](#7-add-own-unique-index)
+- [8. Create partial filters](#8-create-partial-filters)
 
 # 1.Basics
 
@@ -88,7 +87,7 @@ The performance of the operation
 - can be measuered by
 - `db.someCollection.explain("executionStats").find()`
 
-# 3. Example
+# 3. Find docus with an index
 
 `db.products.find({seller: "Max"})`
 
@@ -109,9 +108,7 @@ If there is an index
 - it can directly "jump" to the filtered documents
 - e.g. `Anna, Anna, Chris, Manuel, Max, Max`
 
-# 4. Usage
-
-## 4.1. Create an Index
+# 4. Create an Index
 
 Use the `createIndex()`
 
@@ -121,24 +118,50 @@ Use the `createIndex()`
   - value `1`: ascending
   - value `-1`: descending
 
-## 4.2. Delete an Index
+Indexes can be created
 
-Use the `deleteIndex()`
+- in the foreground (normal) OR
+- in the background
 
-- by passing the created index
-- as an paremeter
-- e.g. `db.contacts.createIndex({"dob.age": 1})`
-  - value `1`: ascending
-  - value `-1`: descending
+If an index is create in the foreground
 
-## 4.3. Get all existing indexes
+- the collection IS LOCKED
+- during that time
+- but it is faster
+- e.g. `db.ratings.createIndex({age: 1})`
+  - which can be enforced via the options
+  - e.g. `db.ratings.createIndex({age: 1}, {background: false})`
+- IMPLICATION: don't use it on production
+
+If an index is create in the background
+
+- the collection is accessible
+- during that time
+- but it is slower
+- e.g. `db.ratings.createIndex({age: 1}, {background: true})`
+- IMPLICATION: useful for production environments
+
+# 5. Delete an Index
+
+Use the `deleteIndex()` to the delete an index by either
+
+1. passing the created index
+   - as an paremeter
+   - e.g. `db.contacts.createIndex({"dob.age": 1})`
+     - value `1`: ascending
+     - value `-1`: descending
+2. Getting the index name and deleting it via the name
+   - get all index names e.g. `db.contacts.getIndexes()`
+   - delete the index via its name e.g. `db.contacts.dropIndex("someIndexName"}`
+
+# 6. Get all existing indexes
 
 All existing indexes can be seen using
 
 - `db.myCollection.getIndexes()`
 - whereby the default index is `_id`
 
-## 4.4. Add own unique index
+# 7. Add own unique index
 
 Indexes can be configured
 
@@ -157,7 +180,7 @@ MongoDB treats non-existing values
   - e.g. `db.users.createIndex({email: 1}, {unique: true, partialFilterExpression: {email: {$exists: true}}})`
   - so all of the not existing values are sorted out in advance
 
-## 4.5. Partial filters
+# 8. Create partial filters
 
 Partial filters provide a solution to the
 
