@@ -1,9 +1,15 @@
 # Basics
 
-An index of a collection enables to
+Indexes enable to
 
-- retrieve data more efficiently
-- if done correctly
+- retrieve faster a small to medium number of documents
+- from a collection
+
+If you have queries that
+
+- regularly return the majority or all of your documents,
+- using an index is mostly SLOWER
+- so it should not be used in these cases
 
 An index can be thought of as an
 
@@ -20,7 +26,7 @@ The important thing is that the index items are **ordered**
   - value `1`: ascending
   - value `-1`: descending
 
-Additionally `sort()` is also sped up (of course only for numbers).
+Good to know: the `sort()` function is also sped up
 
 # Example
 
@@ -43,22 +49,23 @@ If there is an index
 - it can directly "jump" to the filtered documents
 - e.g. `Anna, Anna, Chris, Manuel, Max, Max`
 
-# Disadvantage of indexes
+# Usage
 
-Indexes lead to a lower performance
-
-- for `insert` OR `update` operations
-- e.g. if creating an index for all fields of a collection
-- because if a new document is inserted OR updated
-- all indexes need to be adjusted
-- because the new value needs to be added and
-- the list sorted
-
-# How to Create an Index
+## How to Create an Index
 
 Use the `createIndex()`
 
 - by passing the respective field
+- as an paremeter
+- e.g. `db.contacts.createIndex({"dob.age": 1})`
+  - value `1`: ascending
+  - value `-1`: descending
+
+## How to Delete an Index
+
+Use the `deleteIndex()`
+
+- by passing the created index
 - as an paremeter
 - e.g. `db.contacts.createIndex({"dob.age": 1})`
   - value `1`: ascending
@@ -71,3 +78,14 @@ The performance of the operation
 - which uses an index
 - can be measuered by
 - `db.someCollection.explain("executionStats").find()`
+
+# Don't use indexes for each field
+
+Indexes lead to a lower performance
+
+- for `insert` OR `update` operations
+- e.g. if creating an index for all fields of a collection
+- because if a new document is inserted OR updated
+- all indexes need to be adjusted
+- because the new value needs to be added and
+- the list sorted
