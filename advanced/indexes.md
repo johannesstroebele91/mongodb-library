@@ -139,6 +139,15 @@ Indexes can be configured
   - which checks if the values are unique
   - which are a must
 
+MongoDB treats non-existing values
+
+- still as values in an index
+- so cannot insert two documents with no value
+- that belong to the unique index
+- PS if you want to create such an index, you need to set a `partialFilterExpression`
+  - e.g. `db.users.createIndex({email: 1}, {unique: true, partialFilterExpression: {email: {$exists: true}}})`
+  - so all of the not existing values are sorted out in advance
+
 ## 4.5. Partial filters
 
 Partial filters provide a solution to the
