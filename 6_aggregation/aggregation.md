@@ -12,6 +12,9 @@ Important:
 - `$match` is the equivalent of the filter argument of the `find()` method
 - steps can be combined
 - steps can be reused
+- steps can be repeated (multiple e.g. `$project` stage are possible)
+  - so the data for the subsequent steps needs to be
+  - passed from the previous step to the next one
 - aggregation does not fetch alle the data from the database
   - so it is like the `find()` method+
   - which can be filtered
@@ -73,11 +76,7 @@ https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
 - addition of new fields (e.g. `fullName: {$concat: [{$toUpper: "$name.first"}, " ", "$name.last", "hardCodedText"]}`), and
 - resetting of the values of existing fields
 
-Projection enables to
-
-- use several operators to
-- make more complicated operations
-- such as `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`
+## Example: `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`
 
 ```javascript
 db.persons.aggregate([
@@ -85,6 +84,66 @@ db.persons.aggregate([
     $project: {
       _id: 0,
       gender: 1,
+      fullName: {
+        $concat: [
+          { $toUpper: { $substrCP: ["$name.title", 0, 1] } },
+          {
+            $substrCP: [
+              "$name.title",
+              1,
+              { $subtract: [{ $strLenCP: "$name.title" }, 1] },
+            ],
+          },
+          " ",
+          { $toUpper: "$name.first" },
+          " ",
+          "$name.last",
+          "hardCodedText",
+        ],
+      },
+    },
+  },
+]);
+```
+
+## Example `$convert` (e.g. into double)
+
+```javascript
+db.persons.aggregate([
+  {
+    $project: {
+      _id: 0,
+      name: 1,
+      email: 1,
+      location: {
+        type: "Point",
+        coordinates: [
+          {
+            $convert: {
+              input: "$location.coordinates.longitude",
+              to: "double",
+              onError: 0.0,
+              onNull: 0.0,
+            },
+          },
+          {
+            $convert: {
+              input: "$location.coordinates.latitude",
+              to: "double",
+              onError: 0.0,
+              onNull: 0.0,
+            },
+          },
+        ],
+      },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      gender: 1,
+      email: 1,
+      location: 1,
       fullName: {
         $concat: [
           { $toUpper: { $substrCP: ["$name.title", 0, 1] } },
