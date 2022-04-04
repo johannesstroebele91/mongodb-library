@@ -89,7 +89,7 @@ Links like the ObjectId
 
 Output:
 
-```BSON
+```javascript
 { _id: ObjectId("62348a4a679fb2f726d1ccad"),
   name: 'Max',
   age: 29,
@@ -122,7 +122,7 @@ In JS you can of course use variables
 
 Output:
 
-```BSON
+```javascript
 { _id: ObjectId("62348a4a679fb2f726d1ccad"),
   name: 'Max',
   age: 29,

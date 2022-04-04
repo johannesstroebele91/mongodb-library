@@ -13,7 +13,7 @@ The look operations allows to
 3. Make a reference for a book using the id of the authors `db.books.insertOne({name: "Book", authors: [ObjectId("623708d259b36fb055c61e0e"), ObjectId("623708d259b36fb055c61e0f")]})`
 4. Join the related documents using the id `db.books.aggregate([{$lookup: {from: "authors", localField: "authors", foreignField: "_id", as: "creators"}}])`
 
-```bson
+```javascript
 { _id: ObjectId("623707fd59b36fb055c61e0d"),
   name: 'Book',
   authors:

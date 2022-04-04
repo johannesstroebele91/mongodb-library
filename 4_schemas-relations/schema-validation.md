@@ -63,47 +63,47 @@ However, to set configuration options
 Example:
 
 1. Create collection like:
-   ```bson
+   ```javascript
    db.createCollection("posts", {
-    validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["title", "text", "creator", "comments"],
-      properties: {
-        title: {
-          bsonType: "string",
-          description: "must be a string and is required",
-        },
-        text: {
-          bsonType: "string",
-          description: "must be a string and is required",
-        },
-        creator: {
-          bsonType: "objectId",
-          description: "must be an objectid and is required",
-        },
-        comments: {
-          bsonType: "array",
-          description: "must be an array and is required",
-          items: {
-            bsonType: "object",
-            required: ["text", "author"],
-            properties: {
-              text: {
-                bsonType: "string",
-                description: "must be a string and is required",
-              },
-              author: {
-                bsonType: "objectId",
-                description: "must be an objectid and is required",
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    });
+     validator: {
+       $jsonSchema: {
+         bsonType: "object",
+         required: ["title", "text", "creator", "comments"],
+         properties: {
+           title: {
+             bsonType: "string",
+             description: "must be a string and is required",
+           },
+           text: {
+             bsonType: "string",
+             description: "must be a string and is required",
+           },
+           creator: {
+             bsonType: "objectId",
+             description: "must be an objectid and is required",
+           },
+           comments: {
+             bsonType: "array",
+             description: "must be an array and is required",
+             items: {
+               bsonType: "object",
+               required: ["text", "author"],
+               properties: {
+                 text: {
+                   bsonType: "string",
+                   description: "must be a string and is required",
+                 },
+                 author: {
+                   bsonType: "objectId",
+                   description: "must be an objectid and is required",
+                 },
+               },
+             },
+           },
+         },
+       },
+     },
+   });
    ```
 2. Add a document based on the schema `db.posts.insertOne({title: "Post", text: "desc", tags: ["new", "tech"], creator: ObjectId("6237395059b36fb055c61e13"), comments: [{text: "Post", author: ObjectId("6237395059b36fb055c61e13")}]})`
    - if a document is added that does not match the schema
@@ -114,48 +114,48 @@ Example:
 The validation can be changed
 
 - using `db.runCommand()` like:
-  ```bson
+  ```javascript
   db.runCommand({
-  collMod: "posts",
-  validator: {
-    $jsonSchema: {
-      bsonType: "object",
-      required: ["title", "text", "creator", "comments"],
-      properties: {
-        title: {
-          bsonType: "string",
-          description: "must be a string and is required",
-        },
-        text: {
-          bsonType: "string",
-          description: "must be a string and is required",
-        },
-        creator: {
-          bsonType: "objectId",
-          description: "must be an objectid and is required",
-        },
-        comments: {
-          bsonType: "array",
-          description: "must be an array and is required",
-          items: {
-            bsonType: "object",
-            required: ["text", "author"],
-            properties: {
-              text: {
-                bsonType: "string",
-                description: "must be a string and is required",
-              },
-              author: {
-                bsonType: "objectId",
-                description: "must be an objectid and is required",
+    collMod: "posts",
+    validator: {
+      $jsonSchema: {
+        bsonType: "object",
+        required: ["title", "text", "creator", "comments"],
+        properties: {
+          title: {
+            bsonType: "string",
+            description: "must be a string and is required",
+          },
+          text: {
+            bsonType: "string",
+            description: "must be a string and is required",
+          },
+          creator: {
+            bsonType: "objectId",
+            description: "must be an objectid and is required",
+          },
+          comments: {
+            bsonType: "array",
+            description: "must be an array and is required",
+            items: {
+              bsonType: "object",
+              required: ["text", "author"],
+              properties: {
+                text: {
+                  bsonType: "string",
+                  description: "must be a string and is required",
+                },
+                author: {
+                  bsonType: "objectId",
+                  description: "must be an objectid and is required",
+                },
               },
             },
           },
         },
       },
     },
-  },
-  validationAction: "warn",
+    validationAction: "warn",
   });
   ```
 - which has the arguments:

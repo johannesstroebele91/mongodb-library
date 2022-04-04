@@ -60,7 +60,7 @@ IMPORTANT: **unnecessary to skip other fields** (are automatically omitted)
 
 Output:
 
-```BSON
+```javascript
 { _id: ObjectId("6238d40ca85864906e63df87"), name: 'Arrow' }
 ```
 
@@ -70,15 +70,17 @@ Output:
 
 Output:
 
-```BSON
-{ name: 'Arrow' }
+```javascript
+{
+  name: "Arrow";
+}
 ```
 
 ## Multiple fields
 
 `db.movies.findOne({}, {name: 1, runtime: 1, genres: 1})`
 
-```BSON
+```javascript
 { _id: ObjectId("6238d40ca85864906e63df87"),
   name: 'Arrow',
   genres: [ 'Drama', 'Action', 'Science-Fiction' ] }
@@ -88,8 +90,12 @@ Output:
 
 `db.movies.findOne({}, {"rating.average": 1, _id: 0})`
 
-```BSON
-{ rating: { average: 8 } }
+```javascript
+{
+  rating: {
+    average: 8;
+  }
+}
 ```
 
 # Examples for arrays
@@ -98,23 +104,27 @@ Output:
 
 `db.movies.findOne({genres: "Drama", _id: 0})`
 
-```BSON
-{ genres: [ 'Drama', 'Action', 'Science-Fiction' ] }
+```javascript
+{
+  genres: ["Drama", "Action", "Science-Fiction"];
+}
 ```
 
 ## The field specified in the filter
 
 `db.movies.findOne({genres: "Drama"}, {"genres.$": 1})`
 
-```BSON
-{ genres: [ 'Drama', 'Action', 'Science-Fiction' ] }
+```javascript
+{
+  genres: ["Drama", "Action", "Science-Fiction"];
+}
 ```
 
 ## Find docus with "drama" and only display "horror"
 
 `db.movies.find({genres: "Drama"}, {genres: {$elemMatch: {$eq: "Horror"}}})`
 
-```BSON
+```javascript
 { _id: ObjectId("6238d40ca85864906e63df88") }
 { _id: ObjectId("6238d40ca85864906e63df8a") }
 { _id: ObjectId("6238d40ca85864906e63df8b"),

@@ -65,7 +65,7 @@ comment
 4. Create posts with reference to the creator (user) and the nested comments `db.posts.insertOne({title: "My first post", test: "This is my first post. I hope you like it.", tags: ["new", "tech"], creator: ObjectId("6237395059b36fb055c61e13")})`
 5. Access the post object `db.posts.find()`
 
-```bson
+```javascript
 { _id: ObjectId("623739e859b36fb055c61e15"),
   title: 'My first post',
   test: 'This is my first post. I hope you like it.',

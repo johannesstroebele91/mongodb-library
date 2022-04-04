@@ -31,10 +31,14 @@ https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
 
 # $match
 
-`$match` works similar to the `find()` method
+`$match` works similar to the `find()` method by
 
-- e.g. find only female concats `db.persons.aggregate([{$match: {gender: "female"}}])`
-- returns all female contacts as a cursor
+- filtering the documents to
+- pass only the documents that
+- match the specified condition(s) to the next pipeline stage.
+- e.g. find only female concats and
+  - returns all female contacts as a cursor
+  - `db.persons.aggregate([{$match: {gender: "female"}}])`
 
 # $group
 
@@ -54,11 +58,51 @@ https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
 - can use previously created variables like e.g. totalPersons and
 - you can group by e.g. gender using `{$group: {_id: {gender: "$gender"}}`
 - e.g. `db.persons.aggregate([{$match: {gender: "female"}}, {$group: {_id: {state: "$location.state"}, totalPersons: {$sum: 1}}}, {$sort: {totalPersons: -1}}])`
+- e.g. get persons older than 50, grouped by gender,
+  - amount of persons and average of age per,
+  - sort by totalPersons
+  - `db.persons.aggregate([{$match: {"dob.age": {$gt: 50}}}, {$group: {_id: {gender: "$gender"}, numPersons: {$sum: 1}, avgAge: {$avg: "$dob.age"}}}, {$sort: {numPersons: -1}}])`
 
-# More complex example
+# $project
 
-e.g. get persons older than 50, grouped by gender,
+`$project` is similar to projection of the `find()` method by
 
-- amount of persons and average of age per,
-- sort by totalPersons
-- `db.persons.aggregate([{$match: {"dob.age": {$gt: 50}}}, {$group: {_id: {gender: "$gender"}, numPersons: {$sum: 1}, avgAge: {$avg: "$dob.age"}}}, {$sort: {numPersons: -1}}])`
+- taking a document that can specify
+- inclusion of fields (e.g. `gender: 1`),
+- suppression or exclusion of the fields (e.g. `_id: 0`),
+- addition of new fields (e.g. `fullName: {$concat: [{$toUpper: "$name.first"}, " ", "$name.last", "hardCodedText"]}`), and
+- resetting of the values of existing fields
+
+Projection enables to
+
+- use several operators to
+- make more complicated operations
+- such as `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`
+
+```javascript
+db.persons.aggregate([
+  {
+    $project: {
+      _id: 0,
+      gender: 1,
+      fullName: {
+        $concat: [
+          { $toUpper: { $substrCP: ["$name.title", 0, 1] } },
+          {
+            $substrCP: [
+              "$name.title",
+              1,
+              { $subtract: [{ $strLenCP: "$name.title" }, 1] },
+            ],
+          },
+          " ",
+          { $toUpper: "$name.first" },
+          " ",
+          "$name.last",
+          "hardCodedText",
+        ],
+      },
+    },
+  },
+]);
+```
