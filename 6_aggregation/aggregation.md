@@ -51,5 +51,14 @@ https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
 `$sort` does sort all input documents of the previous stage and
 
 - returns them to the pipeline in sorted order and
-- can use previously created variables like e.g. totalPersons
+- can use previously created variables like e.g. totalPersons and
+- you can group by e.g. gender using `{$group: {_id: {gender: "$gender"}}`
 - e.g. `db.persons.aggregate([{$match: {gender: "female"}}, {$group: {_id: {state: "$location.state"}, totalPersons: {$sum: 1}}}, {$sort: {totalPersons: -1}}])`
+
+# More complex example
+
+e.g. get persons older than 50, grouped by gender,
+
+- amount of persons and average of age per,
+- sort by totalPersons
+- `db.persons.aggregate([{$match: {"dob.age": {$gt: 50}}}, {$group: {_id: {gender: "$gender"}, numPersons: {$sum: 1}, avgAge: {$avg: "$dob.age"}}}, {$sort: {numPersons: -1}}])`
