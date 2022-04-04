@@ -5,7 +5,7 @@ Is an more powerful alternative to the `find()` method
 - builds a pipline of steps (e.g. `$match`, `$sort`, `$group`, ...)
 - that runs on the data
 - that is retrieved from the collection and
-- provides the output in the specified form
+- provides the output in the specified form (a completely new document)
 
 Important:
 
@@ -35,3 +35,13 @@ https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
 
 - e.g. find only female concats `db.persons.aggregate([{$match: {gender: "female"}}])`
 - returns all female contacts as a cursor
+
+# $group
+
+`$group` groups the documents by item to retrieve distinct item values
+
+- which is most often done by
+- creating a new object variable to an `_id` key and
+- processing it in some form
+- e.g. the sum of people living in a certain state
+- `db.persons.aggregate([{$match: {gender: "female"}}, {$group: {_id: {state: "$location.state"}, totalPersons: {$sum: 1}}}])`
