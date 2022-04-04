@@ -9,12 +9,12 @@ Is an more powerful alternative to the `find()` method
 
 Important:
 
-- `$match` is the equivalent of the filter argument of the `find()` method
 - steps can be combined
 - steps can be reused
 - steps can be repeated (multiple e.g. `$project` stage are possible)
-  - so the data for the subsequent steps needs to be
-  - passed from the previous step to the next one
+  - so the data for the subsequent steps needs to be passed
+  - from the previous step to the next one
+  - by specifying them for each `$project` stage
 - aggregation does not fetch alle the data from the database
   - so it is like the `find()` method+
   - which can be filtered
@@ -76,6 +76,12 @@ https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
 - addition of new fields (e.g. `fullName: {$concat: [{$toUpper: "$name.first"}, " ", "$name.last", "hardCodedText"]}`), and
 - resetting of the values of existing fields
 
+Important: steps can be repeated (multiple e.g. `$project` stage are possible)
+
+- so the data for the subsequent steps needs to be passed
+- from the previous step to the next one
+- by specifying them for each `$project` stage
+
 ## Example: `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`
 
 ```javascript
@@ -106,7 +112,9 @@ db.persons.aggregate([
 ]);
 ```
 
-## Example `$convert` (e.g. into double)
+## Example `$convert` (e.g. into double or date)
+
+PS ISODate() shown not up if used with mongosh shell
 
 ```javascript
 db.persons.aggregate([
@@ -114,7 +122,10 @@ db.persons.aggregate([
     $project: {
       _id: 0,
       name: 1,
+      gender: 1,
       email: 1,
+      birthdate: { $convert: { input: "$dob.date", to: "date" } },
+      age: "$dob.age",
       location: {
         type: "Point",
         coordinates: [
@@ -144,6 +155,8 @@ db.persons.aggregate([
       gender: 1,
       email: 1,
       location: 1,
+      birthdate: 1,
+      age: 1,
       fullName: {
         $concat: [
           { $toUpper: { $substrCP: ["$name.title", 0, 1] } },
