@@ -45,3 +45,11 @@ https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
 - processing it in some form
 - e.g. the sum of people living in a certain state
 - `db.persons.aggregate([{$match: {gender: "female"}}, {$group: {_id: {state: "$location.state"}, totalPersons: {$sum: 1}}}])`
+
+# $sort
+
+`$sort` does sort all input documents of the previous stage and
+
+- returns them to the pipeline in sorted order and
+- can use previously created variables like e.g. totalPersons
+- e.g. `db.persons.aggregate([{$match: {gender: "female"}}, {$group: {_id: {state: "$location.state"}, totalPersons: {$sum: 1}}}, {$sort: {totalPersons: -1}}])`
