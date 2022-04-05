@@ -2,17 +2,12 @@
 
 - [1. Basics](#1-basics)
 - [2. Syntax](#2-syntax)
-- [3. Function](#3-function)
+- [3. Functions](#3-functions)
   - [3.1. $match](#31-match)
   - [3.2. $sort](#32-sort)
 - [3.3. $group](#33-group)
 - [3.4. $unwind](#34-unwind)
 - [3.5. $project](#35-project)
-- [4. Operators](#4-operators)
-  - [4.1. `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`, `$convert: { input: "$dob.date", to: "someDataTye" }`](#41-concat-toupper-substrcp-subtract-strlencp-convert--input-dobdate-to-somedatatye-)
-  - [4.2. `$toDate`, `$toInt`, `$isoWeekYear`](#42-todate-toint-isoweekyear)
-  - [4.3. `$push` & `$addToSet` pushes elements into a newly grouped array](#43-push--addtoset-pushes-elements-into-a-newly-grouped-array)
-  - [4.4. Using projection with arrays with `$slice`, `$size`](#44-using-projection-with-arrays-with-slice-size)
 
 # 1. Basics
 
@@ -48,7 +43,7 @@ Important:
 All aggregation arguments like `$match` can be found here:
 https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
 
-# 3. Function
+# 3. Functions
 
 ## 3.1. $match
 
@@ -217,148 +212,4 @@ db.persons
     { $sort: { numPersons: -1 } },
   ])
   .pretty();
-```
-
-# 4. Operators
-
-## 4.1. `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`, `$convert: { input: "$dob.date", to: "someDataTye" }`
-
-PS ISODate() shown not up if used with mongosh shell
-
-```javascript
-db.persons.aggregate([
-  {
-    $project: {
-      _id: 0,
-      gender: 1,
-      fullName: {
-        $concat: [
-          { $toUpper: { $substrCP: ["$name.title", 0, 1] } },
-          {
-            $substrCP: [
-              "$name.title",
-              1,
-              { $subtract: [{ $strLenCP: "$name.title" }, 1] },
-            ],
-          },
-          " ",
-          { $toUpper: "$name.first" },
-          " ",
-          "$name.last",
-          "hardCodedText",
-        ],
-      },
-    },
-  },
-]);
-```
-
-## 4.2. `$toDate`, `$toInt`, `$isoWeekYear`
-
-```javascript
-db.persons.aggregate([
-  {
-    $project: {
-      _id: 0,
-      name: 1,
-      gender: 1,
-      email: 1,
-      birthdate: { $convert: { input: "$dob.date", to: "date" } },
-      birthYear: { $isoWeekYear: "$birthdate" },
-      age: "$dob.age",
-      location: {
-        type: "Point",
-        coordinates: [
-          {
-            $convert: {
-              input: "$location.coordinates.longitude",
-              to: "double",
-              onError: 0.0,
-              onNull: 0.0,
-            },
-          },
-          {
-            $convert: {
-              input: "$location.coordinates.latitude",
-              to: "double",
-              onError: 0.0,
-              onNull: 0.0,
-            },
-          },
-        ],
-      },
-    },
-  },
-  {
-    $project: {
-      _id: 0,
-      gender: 1,
-      email: 1,
-      location: 1,
-      birthdate: 1,
-      age: 1,
-      fullName: {
-        $concat: [
-          { $toUpper: { $substrCP: ["$name.title", 0, 1] } },
-          {
-            $substrCP: [
-              "$name.title",
-              1,
-              { $subtract: [{ $strLenCP: "$name.title" }, 1] },
-            ],
-          },
-          " ",
-          { $toUpper: "$name.first" },
-          " ",
-          "$name.last",
-          "hardCodedText",
-        ],
-      },
-    },
-  },
-]);
-```
-
-## 4.3. `$push` & `$addToSet` pushes elements into a newly grouped array
-
-1. `$push` push all elements into a newly groupped array **including duplicates**
-
-```javascript
-db.friends.aggregate([
-  { $group: { _id: { age: "$age" }, allHobbies: { $push: "$hobbies" } } },
-]);
-```
-
-2. `$addToSet` only add **unique elements** into the new array
-
-```javascript
-db.friends.aggregate([
-  { $unwind: "$hobbies" },
-  { $group: { _id: { age: "$age" }, allHobbies: { $addToSet: "$hobbies" } } },
-]);
-```
-
-## 4.4. Using projection with arrays with `$slice`, `$size`
-
-`$slice` returns a subset of an array by passing arguments
-
-1. array
-2. amount of elements that should be returned
-   - return a certain amount
-     - e.g. 1 element starting from the first element in the array
-     - `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", 1]}}}])`
-   - return the last
-     - e.g. 2 elements
-     - `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", -2,2]}}}])`
-   - return a range of elements
-     - e.g. `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", 2,2]}}}])`
-       - returns starting from the 3rd element (due to starting at index 0)
-       - 2 elements
-
-`$size` the length of an array (starting at 1)
-
-```javascript
-db.friends.aggregate([
-  { $project: { _id: 0, examScore: { $size: "$examScores" } } },
-]);
 ```
