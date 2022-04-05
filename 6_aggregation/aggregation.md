@@ -9,6 +9,7 @@
 - [3.4. $unwind](#34-unwind)
 - [3.5. $project](#35-project)
 - [3.6. `$bucket` for analyzing data](#36-bucket-for-analyzing-data)
+- [3.7 `$skip` and `$limit` to control amount of results](#37-skip-and-limit-to-control-amount-of-results)
 
 # 1. Basics
 
@@ -241,5 +242,22 @@ db.persons.aggregate([
       },
     },
   },
+]);
+```
+
+# 3.7 `$skip` and `$limit` to control amount of results
+
+IMPORTANT:mostly skip should be used before limit
+
+```javascript
+db.persons.aggregate([
+  {
+    $project: {
+      _id: 0,
+      name: { $concat: ["$name.first", " ", "$name.last"] },
+    },
+  },
+  { $skip: 10 },
+  { $limit: 10 },
 ]);
 ```
