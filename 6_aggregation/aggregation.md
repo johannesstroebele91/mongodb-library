@@ -3,17 +3,32 @@
 - [1. Basics](#1-basics)
 - [2. Syntax](#2-syntax)
 - [3. Stages](#3-stages)
-- [4. Apply multiple operations to an array](#4-apply-multiple-operations-to-an-array)
-- [5. Using additional stages](#5-using-additional-stages)
+- [4. Operators](#4-operators)
+- [5. Apply multiple operations to an array](#5-apply-multiple-operations-to-an-array)
+- [6. Using additional stages](#6-using-additional-stages)
 
 # 1. Basics
 
-Is an more powerful alternative to the `find()` method
+_Is an more powerful alternative to the `find()` method_
 
-- builds a pipline of steps (e.g. `$match`, `$sort`, `$group`, ...)
+Aggregation is about
+
+- building a pipline of steps (e.g. `$match`, `$sort`, `$group`, ...)
 - that runs on the data
 - that is retrieved from the collection and
 - provides the output in the specified form (a completely new document)
+
+**Stages define** the
+
+- different steps
+- your data is funneled through
+
+**EACH STAGE RECEIVES ONLY**
+
+- the output of the last stage
+- as the input
+- SO THEY NEED TO BE PASSED
+- for each stages
 
 Important:
 
@@ -42,13 +57,36 @@ https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
 
 # 3. Stages
 
-Stages, such as `$match`, `$sort`, `$group`, `$project`
+Ref: https://www.mongodb.com/docs/manual/reference/operator/aggregation-pipeline/
+
+Stages are explained in the file `stages.md` and
 
 - enable to work with complex data
 - by passing it through a pipeline
-- and are explained in the file `stages.md`
 
-# 4. Apply multiple operations to an array
+The most important ones are:
+
+- `$match`
+- `$group`
+- `$project`
+- `$sort`
+- `$unwind`
+
+# 4. Operators
+
+Ref: https://www.mongodb.com/docs/manual/reference/operator/aggregation/
+
+Operators are explained in the file `operators.md` and
+
+- are available to construct expressions for
+- use in the aggregation pipeline stages
+
+They can be used
+
+- inside of the stages
+- to transform, limit, or re-calcuate data
+
+# 5. Apply multiple operations to an array
 
 ```javascript
 db.friends.aggregate([
@@ -66,7 +104,7 @@ db.friends.aggregate([
 ]);
 ```
 
-# 5. Using additional stages
+# 6. Using additional stages
 
 IMPORTANT: ORDER is important!!!
 

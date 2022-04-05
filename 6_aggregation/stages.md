@@ -56,6 +56,7 @@ Stages, such as `$match`, `$sort`, `$group`, `$project`
 
 - creates multiple documents
 - for each element in the array
+- (like flatting the array)
 
 Example before unwind
 
