@@ -142,7 +142,7 @@ Important: steps can be repeated (multiple e.g. `$project` stage are possible)
 - from the previous step to the next one
 - by specifying them for each `$project` stage
 
-Results of projections can be grouped and
+**Results of projections can be grouped**
 
 ```javascript
 db.persons
@@ -217,6 +217,23 @@ db.persons
   ])
   .pretty();
 ```
+
+**Using projection with arrays with `$slice`**
+
+`$slice` returns a subset of an array by passing arguments
+
+1. array
+2. amount of elements that should be returned
+   - return a certain amount
+     - e.g. 1 element starting from the first element in the array
+     - `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", 1]}}}])`
+   - return the last
+     - e.g. 2 elements
+     - `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", -2,2]}}}])`
+   - return a range of elements
+     - e.g. `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", 2,2]}}}])`
+       - returns starting from the 3rd element (due to starting at index 0)
+       - 2 elements
 
 # 4. Operators
 
