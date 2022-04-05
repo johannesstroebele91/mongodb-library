@@ -13,6 +13,7 @@ Stages, such as `$match`, `$sort`, `$group`, `$project`
 - [6. `$bucket` for analyzing data](#6-bucket-for-analyzing-data)
 - [7 `$skip` and `$limit` to control amount of results](#7-skip-and-limit-to-control-amount-of-results)
 - [8 `$out` to write results of a pipeline to new collection](#8-out-to-write-results-of-a-pipeline-to-new-collection)
+- [9. `$geoNear` for outputting documents in order of nearest to farthest from a specified point](#9-geonear-for-outputting-documents-in-order-of-nearest-to-farthest-from-a-specified-point)
 
 # 1. $match
 
@@ -294,5 +295,36 @@ db.persons.aggregate([
     },
   },
   { $out: "transformedPersons" },
+]);
+```
+
+# 9. `$geoNear` for outputting documents in order of nearest to farthest from a specified point
+
+`$geoNear` has
+
+- to be the first element in the pipeline!!! and
+- will give by back the distance btw the nearest to farthest from a specified point
+- and needs to specify via the query field which fields are used in the following stages
+
+Arguments
+
+- near: the specific point
+- maxdistance: the farthest away range in kilometers
+- query: for specifying the fields that are needed in the following stages
+  - IMPORTANT:
+    - if not specified here,
+    - no fields will be available in the next stages!!!
+- distanceField: how to field with the distance is named
+
+```javascript
+db.transformedPersons.aggregate([
+  {
+    $geoNear: {
+      near: { type: "Point", coordinates: [-18.4, -42.8] },
+      maxDistance: 100000,
+      query: { age: { $gt: 30 } },
+      distanceField: "distance",
+    },
+  },
 ]);
 ```
