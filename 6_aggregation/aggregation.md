@@ -10,6 +10,8 @@
 - [3.5. $project](#35-project)
 - [3.6. `$bucket` for analyzing data](#36-bucket-for-analyzing-data)
 - [3.7 `$skip` and `$limit` to control amount of results](#37-skip-and-limit-to-control-amount-of-results)
+- [4. Apply multiple operations to an array](#4-apply-multiple-operations-to-an-array)
+- [5. Using additional stages](#5-using-additional-stages)
 
 # 1. Basics
 
@@ -257,6 +259,44 @@ db.persons.aggregate([
       name: { $concat: ["$name.first", " ", "$name.last"] },
     },
   },
+  { $skip: 10 },
+  { $limit: 10 },
+]);
+```
+
+# 4. Apply multiple operations to an array
+
+```javascript
+db.friends.aggregate([
+  { $unwind: "$examScores" },
+  { $project: { _id: 1, name: 1, age: 1, score: "$examScores.score" } },
+  { $sort: { score: -1 } },
+  {
+    $group: {
+      _id: "$_id",
+      name: { $first: "$name" },
+      maxScore: { $max: "$score" },
+    },
+  },
+  { $sort: { maxScore: -1 } },
+]);
+```
+
+# 5. Using additional stages
+
+IMPORTANT: ORDER is important!!!
+
+```javascript
+db.persons.aggregate([
+  { $match: { gender: "male" } },
+  {
+    $project: {
+      _id: 0,
+      name: { $concat: ["$name.first", " ", "$name.last"] },
+      birthdate: { $toDate: "$dob.date" },
+    },
+  },
+  { $sort: { birthdate: 1 } },
   { $skip: 10 },
   { $limit: 10 },
 ]);
