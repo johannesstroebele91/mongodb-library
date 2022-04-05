@@ -1,4 +1,19 @@
-# Basics
+**Table of Contents**
+
+- [1. Basics](#1-basics)
+- [2. Syntax](#2-syntax)
+- [3. Function](#3-function)
+  - [3.1. $match](#31-match)
+  - [3.2. $sort](#32-sort)
+- [3.3. $group](#33-group)
+- [3.4. $unwind](#34-unwind)
+- [3.5. $project](#35-project)
+- [4. Operators](#4-operators)
+  - [4.1. `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`, `$convert: { input: "$dob.date", to: "someDataTye" }`](#41-concat-toupper-substrcp-subtract-strlencp-convert--input-dobdate-to-somedatatye-)
+  - [4.2. `$toDate`, `$toInt`, `$isoWeekYear`](#42-todate-toint-isoweekyear)
+  - [4.3. `$push`, `$addToSet` pushes elements into a newly grouped array](#43-push-addtoset-pushes-elements-into-a-newly-grouped-array)
+
+# 1. Basics
 
 Is an more powerful alternative to the `find()` method
 
@@ -21,7 +36,7 @@ Important:
   - and only works with the filtered results in the next steps
 - gives back an cursor
 
-# Syntax
+# 2. Syntax
 
 `db.someCollection.aggregate([{firstStep}, {secondStep}, ...])`
 
@@ -32,7 +47,9 @@ Important:
 All aggregation arguments like `$match` can be found here:
 https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
 
-# $match
+# 3. Function
+
+## 3.1. $match
 
 `$match` works similar to the `find()` method by
 
@@ -43,7 +60,7 @@ https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
   - returns all female contacts as a cursor
   - `db.persons.aggregate([{$match: {gender: "female"}}])`
 
-# $sort
+## 3.2. $sort
 
 `$sort` does sort all input documents of the previous stage and
 
@@ -56,19 +73,59 @@ https://www.mongodb.com/docs/manual/core/aggregation-pipeline/
   - sort by totalPersons
   - `db.persons.aggregate([{$match: {"dob.age": {$gt: 50}}}, {$group: {_id: {gender: "$gender"}, numPersons: {$sum: 1}, avgAge: {$avg: "$dob.age"}}}, {$sort: {numPersons: -1}}])`
 
-# $group
+# 3.3. $group
 
-`$group` groups
+`$group` groups multiple documents into one document (n:1 relation) by
 
-- multiple documents into one document (n:1 relation)
-- by item to retrieve distinct item values
-- which is most often done by
 - creating a new object variable to an `_id` key and
 - processing it in some form
+- without an alias e.g. `db.friends.aggregate([{$group: {_id: "$age"}])`
+- with an alias e.g. `db.friends.aggregate([{$group: {_id: {age: "$age"}}}])`
 - e.g. the sum of people living in a certain state
-- `db.persons.aggregate([{$match: {gender: "female"}}, {$group: {_id: {state: "$location.state"}, totalPersons: {$sum: 1}}}])`
+  - `db.persons.aggregate([{$match: {gender: "female"}}, {$group: {_id: {state: "$location.state"}, totalPersons: {$sum: 1}}}])`
 
-# $project
+# 3.4. $unwind
+
+`$unwind` takes one document with an array and
+
+- creates multiple documents
+- for each element in the array
+
+Example before unwind
+
+```javascript
+{ _id: ObjectId("624c413f83353779d703fc6c"),
+  name: 'Maria',
+  hobbies: [ 'Cooking', 'Skiing' ],
+  age: 29,
+  examScores:
+   [ { difficulty: 3, score: 75.1 },
+     { difficulty: 8, score: 44.2 },
+     { difficulty: 6, score: 61.5 } ] }
+```
+
+Example after unwind: `db.friends.aggregate([{$unwind: "$hobbies"}])"`
+
+```javascript
+{ _id: ObjectId("624c413f83353779d703fc6c"),
+  name: 'Maria',
+  hobbies: 'Cooking',
+  age: 29,
+  examScores:
+   [ { difficulty: 3, score: 75.1 },
+     { difficulty: 8, score: 44.2 },
+     { difficulty: 6, score: 61.5 } ] }
+{ _id: ObjectId("624c413f83353779d703fc6c"),
+  name: 'Maria',
+  hobbies: 'Skiing',
+  age: 29,
+  examScores:
+   [ { difficulty: 3, score: 75.1 },
+     { difficulty: 8, score: 44.2 },
+     { difficulty: 6, score: 61.5 } ] }
+```
+
+# 3.5. $project
 
 `$project` is similar to projection of the `find()` method by
 
@@ -85,104 +142,7 @@ Important: steps can be repeated (multiple e.g. `$project` stage are possible)
 - from the previous step to the next one
 - by specifying them for each `$project` stage
 
-## Operators: `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`, `$convert: { input: "$dob.date", to: "someDataTye" }`
-
-PS ISODate() shown not up if used with mongosh shell
-
-```javascript
-db.persons.aggregate([
-  {
-    $project: {
-      _id: 0,
-      gender: 1,
-      fullName: {
-        $concat: [
-          { $toUpper: { $substrCP: ["$name.title", 0, 1] } },
-          {
-            $substrCP: [
-              "$name.title",
-              1,
-              { $subtract: [{ $strLenCP: "$name.title" }, 1] },
-            ],
-          },
-          " ",
-          { $toUpper: "$name.first" },
-          " ",
-          "$name.last",
-          "hardCodedText",
-        ],
-      },
-    },
-  },
-]);
-```
-
-## Operator, `$toDate`, `$toInt`
-
-```javascript
-db.persons.aggregate([
-  {
-    $project: {
-      _id: 0,
-      name: 1,
-      gender: 1,
-      email: 1,
-      birthdate: { $convert: { input: "$dob.date", to: "date" } },
-      age: "$dob.age",
-      location: {
-        type: "Point",
-        coordinates: [
-          {
-            $convert: {
-              input: "$location.coordinates.longitude",
-              to: "double",
-              onError: 0.0,
-              onNull: 0.0,
-            },
-          },
-          {
-            $convert: {
-              input: "$location.coordinates.latitude",
-              to: "double",
-              onError: 0.0,
-              onNull: 0.0,
-            },
-          },
-        ],
-      },
-    },
-  },
-  {
-    $project: {
-      _id: 0,
-      gender: 1,
-      email: 1,
-      location: 1,
-      birthdate: 1,
-      age: 1,
-      fullName: {
-        $concat: [
-          { $toUpper: { $substrCP: ["$name.title", 0, 1] } },
-          {
-            $substrCP: [
-              "$name.title",
-              1,
-              { $subtract: [{ $strLenCP: "$name.title" }, 1] },
-            ],
-          },
-          " ",
-          { $toUpper: "$name.first" },
-          " ",
-          "$name.last",
-          "hardCodedText",
-        ],
-      },
-    },
-  },
-]);
-```
-
-# Results of projections can be grouped and `$isoWeekYear`
+Results of projections can be grouped and
 
 ```javascript
 db.persons
@@ -256,4 +216,114 @@ db.persons
     { $sort: { numPersons: -1 } },
   ])
   .pretty();
+```
+
+# 4. Operators
+
+## 4.1. `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`, `$convert: { input: "$dob.date", to: "someDataTye" }`
+
+PS ISODate() shown not up if used with mongosh shell
+
+```javascript
+db.persons.aggregate([
+  {
+    $project: {
+      _id: 0,
+      gender: 1,
+      fullName: {
+        $concat: [
+          { $toUpper: { $substrCP: ["$name.title", 0, 1] } },
+          {
+            $substrCP: [
+              "$name.title",
+              1,
+              { $subtract: [{ $strLenCP: "$name.title" }, 1] },
+            ],
+          },
+          " ",
+          { $toUpper: "$name.first" },
+          " ",
+          "$name.last",
+          "hardCodedText",
+        ],
+      },
+    },
+  },
+]);
+```
+
+## 4.2. `$toDate`, `$toInt`, `$isoWeekYear`
+
+```javascript
+db.persons.aggregate([
+  {
+    $project: {
+      _id: 0,
+      name: 1,
+      gender: 1,
+      email: 1,
+      birthdate: { $convert: { input: "$dob.date", to: "date" } },
+      birthYear: { $isoWeekYear: "$birthdate" },
+      age: "$dob.age",
+      location: {
+        type: "Point",
+        coordinates: [
+          {
+            $convert: {
+              input: "$location.coordinates.longitude",
+              to: "double",
+              onError: 0.0,
+              onNull: 0.0,
+            },
+          },
+          {
+            $convert: {
+              input: "$location.coordinates.latitude",
+              to: "double",
+              onError: 0.0,
+              onNull: 0.0,
+            },
+          },
+        ],
+      },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      gender: 1,
+      email: 1,
+      location: 1,
+      birthdate: 1,
+      age: 1,
+      fullName: {
+        $concat: [
+          { $toUpper: { $substrCP: ["$name.title", 0, 1] } },
+          {
+            $substrCP: [
+              "$name.title",
+              1,
+              { $subtract: [{ $strLenCP: "$name.title" }, 1] },
+            ],
+          },
+          " ",
+          { $toUpper: "$name.first" },
+          " ",
+          "$name.last",
+          "hardCodedText",
+        ],
+      },
+    },
+  },
+]);
+```
+
+## 4.3. `$push`, `$addToSet` pushes elements into a newly grouped array
+
+`$push` push all elements into a newly groupped array **including duplicates**
+
+```javascript
+db.friends.aggregate([
+  { $group: { _id: { age: "$age" }, allHobbies: { $push: "$hobbies" } } },
+]);
 ```
