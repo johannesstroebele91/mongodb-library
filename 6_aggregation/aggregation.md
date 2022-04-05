@@ -8,6 +8,7 @@
 - [3.3. $group](#33-group)
 - [3.4. $unwind](#34-unwind)
 - [3.5. $project](#35-project)
+- [3.6. `$bucket` for analyzing data](#36-bucket-for-analyzing-data)
 
 # 1. Basics
 
@@ -212,4 +213,33 @@ db.persons
     { $sort: { numPersons: -1 } },
   ])
   .pretty();
+```
+
+# 3.6. `$bucket` for analyzing data
+
+```javascript
+db.friends.aggregate([
+  {
+    $bucketAuto: {
+      groupBy: "$dob.age",
+      buckets: 5,
+      output: { numPersons: { $sum: 1 }, averageAge: { $avg: "$dob.age" } },
+    },
+  },
+]);
+```
+
+```javascript
+db.persons.aggregate([
+  {
+    $bucket: {
+      groupBy: "$dob.age",
+      boundaries: [18, 30, 40, 50, 60, 120],
+      output: {
+        numPersons: { $sum: 1 },
+        averageAge: { $avg: "$dob.age" },
+      },
+    },
+  },
+]);
 ```
