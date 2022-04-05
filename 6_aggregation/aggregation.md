@@ -11,7 +11,8 @@
 - [4. Operators](#4-operators)
   - [4.1. `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`, `$convert: { input: "$dob.date", to: "someDataTye" }`](#41-concat-toupper-substrcp-subtract-strlencp-convert--input-dobdate-to-somedatatye-)
   - [4.2. `$toDate`, `$toInt`, `$isoWeekYear`](#42-todate-toint-isoweekyear)
-  - [4.3. `$push`, `$addToSet` pushes elements into a newly grouped array](#43-push-addtoset-pushes-elements-into-a-newly-grouped-array)
+  - [4.3. `$push` & `$addToSet` pushes elements into a newly grouped array](#43-push--addtoset-pushes-elements-into-a-newly-grouped-array)
+  - [4.4. Using projection with arrays with `$slice`, `$size`](#44-using-projection-with-arrays-with-slice-size)
 
 # 1. Basics
 
@@ -218,23 +219,6 @@ db.persons
   .pretty();
 ```
 
-**Using projection with arrays with `$slice`**
-
-`$slice` returns a subset of an array by passing arguments
-
-1. array
-2. amount of elements that should be returned
-   - return a certain amount
-     - e.g. 1 element starting from the first element in the array
-     - `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", 1]}}}])`
-   - return the last
-     - e.g. 2 elements
-     - `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", -2,2]}}}])`
-   - return a range of elements
-     - e.g. `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", 2,2]}}}])`
-       - returns starting from the 3rd element (due to starting at index 0)
-       - 2 elements
-
 # 4. Operators
 
 ## 4.1. `$concat`, `$toUpper`, `$substrCP`, `$subtract`, `$strLenCP`, `$convert: { input: "$dob.date", to: "someDataTye" }`
@@ -335,9 +319,9 @@ db.persons.aggregate([
 ]);
 ```
 
-## 4.3. `$push`, `$addToSet` pushes elements into a newly grouped array
+## 4.3. `$push` & `$addToSet` pushes elements into a newly grouped array
 
-`$push` push all elements into a newly groupped array **including duplicates**
+1. `$push` push all elements into a newly groupped array **including duplicates**
 
 ```javascript
 db.friends.aggregate([
@@ -345,11 +329,36 @@ db.friends.aggregate([
 ]);
 ```
 
-`$addToSet` only add **unique elements** into the new array
+2. `$addToSet` only add **unique elements** into the new array
 
 ```javascript
 db.friends.aggregate([
   { $unwind: "$hobbies" },
   { $group: { _id: { age: "$age" }, allHobbies: { $addToSet: "$hobbies" } } },
+]);
+```
+
+## 4.4. Using projection with arrays with `$slice`, `$size`
+
+`$slice` returns a subset of an array by passing arguments
+
+1. array
+2. amount of elements that should be returned
+   - return a certain amount
+     - e.g. 1 element starting from the first element in the array
+     - `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", 1]}}}])`
+   - return the last
+     - e.g. 2 elements
+     - `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", -2,2]}}}])`
+   - return a range of elements
+     - e.g. `db.friends.aggregate([{$project: { _id: 0, examScore: {$slice: ["$examScores", 2,2]}}}])`
+       - returns starting from the 3rd element (due to starting at index 0)
+       - 2 elements
+
+`$size` the length of an array (starting at 1)
+
+```javascript
+db.friends.aggregate([
+  { $project: { _id: 0, examScore: { $size: "$examScores" } } },
 ]);
 ```
