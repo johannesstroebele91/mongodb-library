@@ -43,6 +43,13 @@ Important:
   - which can be filtered
   - and only works with the filtered results in the next steps
 - gives back an cursor
+- can be used with indexes to make the queries faster (via the `$match` stage)
+- try to make the retrieved data as small as possible
+  - to avoiding using the disk
+  - because they make queries slow
+  - MongoDB uses the memory if the data is small enough
+  - use the project field to trim the data (so the data is smaller)
+- optimizing the entry data or pipeline itself may improve performance
 
 # 2. Syntax
 
