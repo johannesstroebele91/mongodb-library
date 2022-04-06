@@ -62,3 +62,17 @@ You CANNOT log into **MULTIPLE USERS**
 - using
   - `db.logout()`
   - or quitting the shell
+
+# Updating the rights of a user
+
+It can be updated by
+
+1. switching to a user with admin rights (logout before)
+2. Updating the user by passing the parameters
+   - the username in string `test`
+   - assign new roles (replaces the old roles)
+   - e.g. `db.updateUser("appdev", {roles: ["readWrite", {role: "readWrite", db: "blog"}]})`
+
+# Find out the rights of a user
+
+`db.getUser("someUsername")`
