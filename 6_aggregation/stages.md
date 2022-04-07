@@ -43,7 +43,7 @@ Stages, such as `$match`, `$sort`, `$group`, `$project`
 
 `$group` groups multiple documents into one document (n:1 relation) by
 
-- creating a new object variable to an `_id` key and
+- creating a new object variable for an `_id` key AND
 - processing it in some form
 - without an alias e.g. `db.friends.aggregate([{$group: {_id: "$age"}])`
 - with an alias e.g. `db.friends.aggregate([{$group: {_id: {age: "$age"}}}])`
