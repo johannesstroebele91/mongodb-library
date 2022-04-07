@@ -11,6 +11,13 @@ The users can authenticated themselves via:
 - shell (e.g. mongo, mongosh)
 - application which uses the MongoDB driver (e.g. React)
 
+MongoDB uses a role based access controll approach
+
+You can create users on databases AND
+
+- you then log in with your credentials
+- against those databases and
+
 # Authentication
 
 Identifies valied users of the database

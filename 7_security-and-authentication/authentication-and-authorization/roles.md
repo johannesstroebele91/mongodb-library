@@ -1,3 +1,10 @@
+# Basics
+
+Users by default have no privileges AND
+
+- need to be assigned roles
+- to get them
+
 # Example of typical DB users
 
 Different types of database users are:
