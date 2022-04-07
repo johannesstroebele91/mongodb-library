@@ -1,16 +1,33 @@
-# Authentication and Authorization
+# 1. Setup authentication and authorization by creating the first user
 
-_User can be Created and given roles_
+If you decided to
 
-1. Create a user via `createUser()` with a
-   - username and password
-   - on a database (e.g. admin),
-     - which does not limit the authentication
-     - to this one database
-2. Assign at least one role to the user to give privileges
-3. Update the users if needed
+- secure your database via
+- authentication and authorization AND
+- now users exist until now
+- you need to follow the following steps:
 
-# Login
+1. Staring the MongoDB server locally with the
+   - `--auth parameter`
+   - e.g. `mongod --dbpath C:\mongodb\data --auth`
+2. Connect from a client (mongo, mongosh) application via these options:
+   1. option `mongo`
+   2. option `mognosh`
+   3. option`mongo`
+3. Switch to the admin database `use admin`
+4. Add a user
+   - with username and password AND
+   - a role (group of privileges)
+   - for one, multiple, or all databases (e.g. admin),
+   - e.g. `db.createUser({user: "admin", password: "admin", roles: ["userAdminAnyDatabase"]})`
+5. Loggin via these two options if a users exists
+   1. option: `mongo -u test -p test --authenticationDatabase admin`
+   2. option (especially if you use mongosh):
+      1. switch to the respective db e.g. `use admin`
+      2. authenticate `db.auth('username', 'password)'`
+6. Update the users if needed
+
+# 2. Login after setup
 
 _Users can loggin by_
 
@@ -23,18 +40,8 @@ _Users can loggin by_
    2. option:
       1. switch to the respective db e.g. `use someDB`
       2. authenticate `db.auth('username', 'password)'`
-4. MongoDB allows to create a single user
-   - if there are NO users for the database AND
-   - if you are connected to a local database by
-   1. switch to the admin database `use admin`
-   2. add a role e.g. `db.createUser({user: "admin", password: "admin", roles: ["userAdminAnyDatabase"]})`
-   3. Loggin via these two options if a users exists
-      1. option: `mongo -u test -p test --authenticationDatabase admin`
-      2. option:
-         1. switch to the respective db e.g. `use admin`
-         2. authenticate `db.auth('username', 'password)'`
 
-# Create new user
+# 3. Create additional users
 
 A user can be created by
 
@@ -47,7 +54,7 @@ PS the role `readWrite`
 - is a build in role
 - which is specified in the file `roles.md`
 
-# Working with a user
+# 4. Implications of assigning a role
 
 Users that have the role e.g. `readWrite`
 
@@ -63,7 +70,7 @@ You CANNOT log into **MULTIPLE USERS**
   - `db.logout()`
   - or quitting the shell
 
-# Updating the rights of a user
+# 5. Updating the rights of a user
 
 It can be updated by
 
@@ -73,6 +80,6 @@ It can be updated by
    - assign new roles (replaces the old roles)
    - e.g. `db.updateUser("appdev", {roles: ["readWrite", {role: "readWrite", db: "blog"}]})`
 
-# Find out the rights of a user
+# 6. Find out the rights of a user
 
 `db.getUser("someUsername")`
