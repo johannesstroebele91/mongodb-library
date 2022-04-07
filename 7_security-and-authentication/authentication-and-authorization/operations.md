@@ -21,8 +21,8 @@ If you decided to
    - for one, multiple, or all databases (e.g. admin),
    - e.g. `db.createUser({user: "admin", password: "admin", roles: ["userAdminAnyDatabase"]})`
 5. Loggin via these two options if a users exists
-   1. option: `mongo -u test -p test --authenticationDatabase admin`
-   2. option (especially if you use mongosh):
+   1. option: e.g. `mongo -u test -p test --authenticationDatabase admin`
+   2. option (especially if you use mongosh), e.g.:
       1. switch to the respective db e.g. `use admin`
       2. authenticate `db.auth('username', 'password)'`
 6. Update the users if needed
@@ -82,4 +82,5 @@ It can be updated by
 
 # 6. Find out the rights of a user
 
-`db.getUser("someUsername")`
+- one user: `db.getUser("someUsername")`
+- all users: `db.getUsers()`
